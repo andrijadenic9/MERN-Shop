@@ -1,2 +1,2 @@
-# Shop-with-React-and-Node
+# MERN-shop
 Online shop

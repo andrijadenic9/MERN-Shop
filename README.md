@@ -1,2 +1,2 @@
-# MERN-shop
+# MERN-Shop
 Online shop

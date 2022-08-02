@@ -1,29 +1,27 @@
-// const express = require('express');
-// const routes = express.Router();
-// const Users = require('../model/userModel');
-// const Emails = require('../model/emailModel');
+const express = require('express');
+const routes = express.Router();
+const Users = require('../model/userModel');
+const Emails = require('../model/emailModel');
 
-// routes.get('/get-all-stats', (req, res) => {
+routes.get('/get-all-stats', async (req, res) => {
+    let userNumber;
+    let emailNumber;
 
-//     Users.find((err, data) => {
-//         if (err) {
-//             res.send(err);
-//         } else {
-//             console.log(data);
-//             res.send(data)
-//         }
-//     })
+    await Emails.find((err, data) => {
+        if (err) {
+            res.send(err);
+        } else {
+            emailNumber = data.length;
+        }
+    })
 
-// })
+    await Users.find((err, data) => {
+        if (err) {
+            res.send(err);
+        } else {
+            userNumber = data.length;
+        }
+        res.send({ users: userNumber, emails: emailNumber });
+    })
+})
 
-// routes.post('/complete-registration', (req, res) => {
-//     const userID = req.body.userID;
-
-//     Users.updateOne({ _id: userID }, { isActive: true }, (err, data) => {
-//         if (err) {
-//             res.send(err);
-//         } else {
-//             res.send(data)
-//         }
-//     });
-// });

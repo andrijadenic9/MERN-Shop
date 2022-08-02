@@ -19,21 +19,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
 
-// * REGISTER
-app.use('/api/user', userRoute);
-
-// * LOGIN
-app.use('/api/user', userRoute);
-
-// * COMPLETE REGISTRATION THROUGHT EMAIL VERIFICATION LINK
+// * USER
 app.use('/api/user', userRoute);
 
 // * PAYMENT WITH STRIPE
 app.use('/api/payment', paymentRoute);
 
-// * GET ALL STATISTICS
-// app.use('/api/admin', adminRoute); 
-
+// TODO -ovo treba popraviti
+// * ADMIN
+// app.use('/api/admin', adminRoute);
 app.get('/api/admin/get-all-stats', (req, res) => {
     let userNumber;
     let emailNumber;
@@ -43,25 +37,42 @@ app.get('/api/admin/get-all-stats', (req, res) => {
             res.send(err);
         } else {
             emailNumber = data.length;
-            // res.write(emailNumber);
         }
-        // console.log(userNumber);
-        // console.log(emailNumber);
-        // res.data({ users: userNumber, emails: emailNumber });
     })
 
     Users.find((err, data) => {
-        if (err) { 
+        if (err) {
             res.send(err);
-
         } else {
             userNumber = data.length;
-            // res.write(userNumber);
         }
-        res.data({ users: userNumber, emails: emailNumber });
-
+        res.send({ users: userNumber, emails: emailNumber });
     })
-})
+});
+
+app.get('/api/admin/get-all-users', (req, res) => {
+    Users.find((err, data) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(data);
+        }
+    })
+});
+
+app.put('/api/admin/edit-user', (req, res) => {
+    const userID = req.body._id;
+
+    Users.find({ _id: userID }, (err, data) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(data);
+        }
+    });
+});
+
+
 
 // * CONTACT MESSAGE API CALL
 app.post('/send-message', async (req, res) => {

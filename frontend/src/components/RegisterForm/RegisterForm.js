@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { FaArrowRight } from "react-icons/fa";
-
 import AuthService from '../../services/AuthService';
 import { goToLogin } from '../../redux-store/forms/toggleFormSlice';
 import './RegisterForm.scss';
@@ -42,7 +41,7 @@ function RegisterForm() {
             setIsValidUsername(true);
         }
 
-        if (registerUserObject.password.length < 5) {
+        if (registerUserObject.password.length < 4) {
             setIsValidPassword(false);
         } else {
             setIsValidPassword(true);
@@ -54,10 +53,11 @@ function RegisterForm() {
             setIsValidEmail(true);
         }
 
-        if (registerUserObject.username && !registerUserObject.password.length < 5 && registerUserObject.email.includes('@')) {
+        if (registerUserObject.username && !registerUserObject.password.length < 4 && registerUserObject.email.includes('@')) {
             AuthService.register(registerUserObject)
                 .then(res => {
                     if (res && res.status === 200) {
+                        console.log(res.data);
                         setIsAPIError(false);
                         setIsAPIFinished(true);
                     }
@@ -84,7 +84,7 @@ function RegisterForm() {
                 <label htmlFor="username" style={isValidUsername ? { color: '' } : { color: 'tomato' }}>Username {isValidUsername ? null : 'required'}</label>
                 <input type="text" id="username" name="username" onInput={fillRegisterInputs} />
 
-                <label htmlFor="password" style={isValidPassword ? { color: '' } : { color: 'tomato' }}>Password  {isValidPassword ? null : 'must be at least 5 characters long'}</label>
+                <label htmlFor="password" style={isValidPassword ? { color: '' } : { color: 'tomato' }}>Password  {isValidPassword ? null : 'must be at least 4 characters long'}</label>
                 <input type="password" id="password" name="password" onInput={fillRegisterInputs} />
 
                 {isAPIError ? <p>ERROR, please try again later</p> : null}

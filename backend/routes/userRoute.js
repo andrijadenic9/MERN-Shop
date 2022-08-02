@@ -1,12 +1,13 @@
 const express = require('express');
 const routes = express.Router();
 const Users = require('../model/userModel');
+const nodemailer = require('nodemailer');
 
 
 // * REGISTER
 routes.post('/register', (req, res) => {
     const reqBody = req.body;
-    console.log(reqBody);
+    // console.log(reqBody, 'boddyyyyy');
     Users.findOne(reqBody, async (err, data) => {
         if (err) {
             console.log(`Error on register user ${err}`)
@@ -15,7 +16,7 @@ routes.post('/register', (req, res) => {
         }
 
         if (data) {
-            res.send(`User already exist ${data.username}`)
+            res.send(`User ${data.username} already exist`)
         } else {
             const newUser = new Users(reqBody);
             const saveNewUser = await newUser.save();
@@ -47,8 +48,8 @@ routes.post('/register', (req, res) => {
                 `, // html body
             });
 
-            console.log("Message sent: %s", info.messageId);
             // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+            console.log("Message sent: %s", info.messageId);
 
             // Preview only available when sending through an Ethereal account
             console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
@@ -62,11 +63,11 @@ routes.post('/register', (req, res) => {
 routes.post('/login', validateLogin, (req, res) => {
     const reqBody = req.body;
     Users.findOne(reqBody, (err, data) => {
-        console.log(data);
+        // console.log(data);
         if (err) {
             console.log(`Error to login`);
             res.status(416).send('Error to login' + err);
-            return
+            return;
         }
 
         if (data) {
@@ -90,10 +91,33 @@ routes.post('/complete-registration', (req, res) => {
     });
 });
 
+routes.put('/update-user', (req, res) => {
+    const reqBody = req.body;
+    console.log(reqBody)
+    Users.updateOne({ _id: reqBody._id }, {
+        $set: {
+            username: reqBody.username,
+            email: reqBody.email,
+            password: reqBody.password,
+            isAdmin: reqBody.isAdmin,
+            isActive: reqBody.isActive
+        }
+    }, (err, data) => {
+        if (err) {
+            const errorMsg = `Error on updating user: ${err}`;
+            console.log(err);
+            res.send(errorMsg);
+        } else {
+            res.send(data);
+        }
+    });
 
+});
+
+// * validate login form midleware on backhand
 function validateLogin(req, res, next) {
     const reqBody = req.body;
-    if(!reqBody.username || !reqBody.password){
+    if (!reqBody.username || !reqBody.password) {
         res.send('Not valid');
         return;
     }

@@ -29,6 +29,7 @@ function ActivateUser() {
                 // * if not set activate message to be success
                 .catch(err => {
                     setIsActiveAccount(false);
+                    console.log(err) ;
                 })
                 // * for activation account we need from promise to be finished and then we set api call is finished
                 .finally(() => {
@@ -51,7 +52,7 @@ function ActivateUser() {
                 <div className="col-md-12">
                     <h1>Activation page</h1>
 
-                    // * only when api call is finished print message depend on is account active or not
+                    {/* only when api call is finished print message depend on is account active or not */}
                     {isAPIFinished && responseMessageLayout()}
 
                 </div>

@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { showLoader } from '../../redux-store/loader/loaderSlice';
 import AdminService from '../../services/AdminService';
 import './statistics.scss';
 
@@ -6,17 +8,16 @@ function Statistics() {
 
     const [numbers, setNumbers] = useState('');
     const [finished, setFinished] = useState(false);
+    const dispatch = useDispatch();
 
     useEffect(() => {
+        dispatch(showLoader(true));
         AdminService.getAllStats()
-            .then(res => {
-
-                if (res && res.status === 200) {
-
-                    console.log(res.data);
+        .then(res => {
+            if (res && res.status === 200) {
+                console.log(res.data);
                     setNumbers(res.data);
                     setFinished(true);
-
                 } else {
                     console.log('naso sam samo 1')
                 }
@@ -25,6 +26,7 @@ function Statistics() {
                 console.log(err);
             })
             .finally(e => {
+                dispatch(showLoader(false));
             })
     }, [])
 

@@ -12,11 +12,15 @@ class AuthService {
     }
 
     static completeRegistration(id){
-        return axios.post('/api/user/complete-registration', id)
+        return axios.post('/api/user/complete-registration', id);
     }
 
     static isUserLoggedIn(){
         return localStorage.getItem(localStorageConfig.USER);
+    }
+
+    static updateUser(user){
+        return axios.put('/api/user/update-user', user);
     }
 }
 

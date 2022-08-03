@@ -93,9 +93,12 @@ routes.post('/complete-registration', (req, res) => {
 
 routes.put('/update-user', (req, res) => {
     const reqBody = req.body;
-    console.log(reqBody)
     Users.updateOne({ _id: reqBody._id }, {
         $set: {
+            firstName: reqBody.firstName,
+            lastName: reqBody.lastName,
+            address: reqBody.address,
+            city: reqBody.city,
             username: reqBody.username,
             email: reqBody.email,
             password: reqBody.password,
@@ -111,7 +114,16 @@ routes.put('/update-user', (req, res) => {
             res.send(data);
         }
     });
+});
 
+routes.delete('/delete-user/:userID', (req, res) => {
+    Users.deleteOne({ _id: req.params.userID }, (err, data) => {
+        if (err) {
+            res.send('Error ' + err);
+        } else {
+            res.send('Successfully deleted user')
+        }
+    });
 });
 
 // * validate login form midleware on backhand

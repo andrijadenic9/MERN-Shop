@@ -14,6 +14,10 @@ class ShopService {
     static getPayment(body) {
         return axios.post('/api/payment/init-payment', body);
     }
+
+    static addNewProduct(product) {
+        return axios.post('/api/product/add-new-product', product);
+    }
 }
 
 export default ShopService;

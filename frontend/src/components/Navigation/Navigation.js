@@ -33,8 +33,7 @@ function Navigation() {
             <div className="dropdown">
                 <li className="dropbtn"><a>{user.username}<FaAngleDown /></a></li>
                 <div className="dropdown-content">
-                    <li><a>Profile</a></li>
-                    <li><a>Messages</a></li>
+                    <li><a href="#">Profile</a></li>
                     {user.isAdmin === 'true' ? <li><Link to={routeConfig.DASHBOARD.url}>Dashboard</Link></li> : null}
                     <li onClick={userLogout}><a>Logout</a></li>
                 </div>

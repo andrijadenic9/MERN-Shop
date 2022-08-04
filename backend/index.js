@@ -6,6 +6,7 @@ const serverConfig = require('./config/serverConfig');
 const dbConfig = require('./config/dbConfig');
 const Users = require('./model/userModel');
 const Emails = require('./model/emailModel');
+const Products = require('./model/productModel');
 const app = express();
 const userRoute = require('./routes/userRoute');
 const adminRoute = require('./routes/adminRoute');
@@ -24,6 +25,10 @@ app.use('/api/user', userRoute);
 
 // * PAYMENT WITH STRIPE
 app.use('/api/payment', paymentRoute);
+
+app.post('/api/product/add-new-product', (req, res) => {
+    console.log(req.body, 'boddyyy')
+})
 
 // TODO -ovo treba popraviti
 // * ADMIN

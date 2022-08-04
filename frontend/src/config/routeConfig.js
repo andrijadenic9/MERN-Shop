@@ -39,7 +39,7 @@ export const routeConfig = {
         url: 'users'
     },
     DASHBOARD_PRODUCTS: {
-        url: 'products'
+        url: 'products',
     },
     DASHBOARD_EMAILS: {
         url: 'emails'

@@ -33,7 +33,7 @@ function Sidebar() {
             <section className="app">
                 <aside className="sidebar">
                     <header>
-                        <div className="d-flex" style={{justifyContent: 'space-between'}}>
+                        <div className="d-flex" style={{ justifyContent: 'space-between' }}>
                             <h5 className="me-2">Admin panel</h5>
                             <span><h5>|</h5></span>
                             <h5 className="ms-2"><Link onClick={e => dispatch(showDashboard(false))} to={routeConfig.HOME.url} style={{ color: '#fff' }}>Home page</Link></h5>

@@ -14,6 +14,10 @@ class AdminService {
         return axios.post('/api/admin/add-product', product);
     }
 
+    // static editUser(user){
+    //     return axios.put('/api/admin/edit-user', user);
+    // }
+
 }
 
 export default AdminService;

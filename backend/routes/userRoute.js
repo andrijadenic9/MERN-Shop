@@ -3,10 +3,10 @@ const routes = express.Router();
 const Users = require('../model/userModel');
 const nodemailer = require('nodemailer');
 
-
 // * REGISTER
 routes.post('/register', (req, res) => {
     const reqBody = req.body;
+    // console.log(reqBody, 'boddyyyyy');
     Users.findOne(reqBody, async (err, data) => {
         if (err) {
             console.log(`Error on register user ${err}`)

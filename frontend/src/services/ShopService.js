@@ -19,7 +19,7 @@ class ShopService {
         return axios.post('/api/product/add-new-product', product);
     }
 
-    static getProductFromDB(){
+    static getProductFromDB() {
         return axios.get('/api/product/get-all-product-from-db');
     }
 }

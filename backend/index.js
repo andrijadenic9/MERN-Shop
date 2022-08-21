@@ -111,6 +111,40 @@ app.get('/uploadedFiles/:imageName', (req, res) => {
 //     })
 // });
 
+// TODO -ovo treba popraviti
+// * ADMIN
+// app.use('/api/admin', adminRoute);
+app.get('/api/admin/get-all-stats', (req, res) => {
+    let userNumber;
+    let emailNumber;
+
+    Emails.find((err, data) => {
+        if (err) {
+            res.send(err);
+        } else {
+            emailNumber = data.length;
+        }
+    })
+
+    Users.find((err, data) => {
+        if (err) {
+            res.send(err);
+        } else {
+            userNumber = data.length;
+        }
+        res.send({ users: userNumber, emails: emailNumber });
+    })
+});
+
+app.get('/api/admin/get-all-users', (req, res) => {
+    Users.find((err, data) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(data);
+        }
+    })
+});
 
 app.put('/api/admin/edit-user', (req, res) => {
     const userID = req.body._id;

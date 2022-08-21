@@ -1,0 +1,11 @@
+.wrapper {
+    display: flex;
+    gap: 1rem;
+    margin-top: 50px;
+
+    & .col-md-3 {
+        border: 1px solid tomato;
+        box-sizing: border-box;
+        flex: 1;
+    }
+}

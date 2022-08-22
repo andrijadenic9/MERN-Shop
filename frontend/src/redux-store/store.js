@@ -5,6 +5,7 @@ import cartReducer from "./cart/cartSlice";
 import orderProcessSlice from "./cart/orderProcessSlice";
 import loaderSlice from "./loader/loaderSlice";
 import dashboardSlice from "./dashboard/dashboardSlice";
+import currencySlice from "./currency/currencySlice";
 
 export default configureStore({
     reducer: {
@@ -13,6 +14,7 @@ export default configureStore({
         cartStore: cartReducer,
         orderProcessStore: orderProcessSlice,
         loaderStore: loaderSlice,
-        dashboardStore: dashboardSlice
+        dashboardStore: dashboardSlice,
+        currencyStore: currencySlice
     }
 });

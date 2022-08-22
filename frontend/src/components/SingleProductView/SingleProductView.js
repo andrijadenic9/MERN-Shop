@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addItem } from '../../redux-store/cart/cartSlice';
 import ShopService from '../../services/ShopService';
 import './SingleProductView.scss';
@@ -17,6 +17,7 @@ function SingleProductView() {
     const [product, setProduct] = useState({});
     const params = useParams();
     const dispatch = useDispatch();
+    const symbol = useSelector(state => state.currencyStore.symbol);
 
 
     useEffect(() => {
@@ -84,7 +85,7 @@ function SingleProductView() {
                                 <p>{product.description}</p>
                                 <div className="details">
                                     <span className="discount"><span>discount</span> <span>{product.discountPercentage}%</span></span>
-                                    <span className="price">${product.price}</span>
+                                    <span className="price">{product.price} {symbol}</span>
                                 </div>
                                 <div className="add-to-cart-btn-wrapper">
                                     <button onClick={addToCart}>Add to cart</button>

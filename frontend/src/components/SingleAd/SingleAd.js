@@ -1,8 +1,29 @@
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { routeConfig } from "../../config/routeConfig";
 import './SingleAd.scss';
 
 function SingleAd({ ad }) {
+    const symbol = useSelector(state => state.currencyStore.symbol);
+    const currency = useSelector(state => state.currencyStore.currency);
+
+    // useEffect(() => {
+    //     console.log(currency, 'CUR');
+    //     console.log(symbol, 'SYMB');
+    // }, [currency])
+
+    function checkPrice() {
+        if (currency === 'USD') {
+            return ad.price
+        }
+        if (currency === 'EUR') {
+            return ad.price * 0.98
+        }
+        if (currency === 'RSD') {
+            return ad.price * 118
+        }
+    }
 
     return (
         <div className="col-md-6 col-lg-4 col-xl-3" key={ad.id}>
@@ -22,7 +43,7 @@ function SingleAd({ ad }) {
                             <span>Discout</span><span>{ad.discountPercentage}</span>
                         </div>
                         <div className="d-flex justify-content-between">
-                            <span>Price</span><span>{ad.price}</span>
+                            <span>Price</span><span>{checkPrice()} {symbol}</span>
                         </div>
                     </div>
                     <div className="d-flex justify-content-between total font-weight-bold mt-4">

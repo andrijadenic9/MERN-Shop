@@ -15,20 +15,21 @@ import {
     FaSearch,
 } from "react-icons/fa";
 import './top-navigation.scss';
+import { setCurrency } from "../../redux-store/currency/currencySlice";
 
 
 function TopNavigation() {
     // const [search, setSearch] = useState("");
-    // // const { currency } = useSelector((state) => state.currencyStore);
+    const { currency } = useSelector((state) => state.currencyStore);
     // const { user } = useSelector(state => state.userStore);
     // const navigate = useNavigate();
     // const dispatch = useDispatch();
     // // const user = useContext(exampleContext)
 
-    // useEffect(() => {
-    //     console.log(user, 'usereeerer');
-    //     // localStorage.setItem("Currency", currency);
-    // }, [user]);
+    useEffect(() => {
+        // console.log(user, 'usereeerer');
+        localStorage.setItem("currency", currency);
+    }, [currency]);
 
     // const logOut = () => {
     //     localStorage.removeItem("user");
@@ -117,17 +118,23 @@ function TopNavigation() {
     //     // dispatch(setCurrency(e.target.value));
     // };
 
-    // const checkCurrency = () => {
-    //     if (currency === "USD") {
-    //         return "USD";
-    //     }
-    //     if (currency === "RSD") {
-    //         return "RSD";
-    //     }
-    //     if (currency === "EUR") {
-    //         return "EUR";
-    //     }
-    // };
+    const dispatch = useDispatch();
+
+    const changeCurrency = (e) => {
+        dispatch(setCurrency(e.target.value))
+    }
+
+    const checkCurrency = () => {
+        if (currency === "USD") {
+            return "USD";
+        }
+        if (currency === "RSD") {
+            return "RSD";
+        }
+        if (currency === "EUR") {
+            return "EUR";
+        }
+    };
 
     return (
         <section className="nav-bar-wrapper">
@@ -154,8 +161,8 @@ function TopNavigation() {
 
                         <select
                             id="currency"
-                            // defaultValue={checkCurrency()}
-                            // onChange={currencyBtn}
+                            defaultValue={checkCurrency()}
+                            onChange={changeCurrency}
                         >
                             <option value="USD">USD</option>
                             <option value="EUR">EUR</option>

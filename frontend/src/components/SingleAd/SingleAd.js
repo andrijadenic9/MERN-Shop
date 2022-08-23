@@ -13,15 +13,31 @@ function SingleAd({ ad }) {
     //     console.log(symbol, 'SYMB');
     // }, [currency])
 
+    // * MAKING PRICESES LOOK
+    function getEndPrice(price) {
+        const endPrice = price.toFixed(2).split('');
+        if (endPrice.length > 6 && endPrice.length < 10) {
+            endPrice.splice(-6, 0, ',');
+        } else if (endPrice.length >= 10) {
+            endPrice.splice(-6, 0, ',');
+            endPrice.splice(-10, 0, ',');
+        }
+        return endPrice;
+    }
+
+    // * GETING PRICESES
     function checkPrice() {
         if (currency === 'USD') {
-            return ad.price
+            const price = ad.price;
+            return getEndPrice(price);
         }
         if (currency === 'EUR') {
-            return ad.price * 0.98
+            const price = ad.price * 0.98;
+            return getEndPrice(price);
         }
         if (currency === 'RSD') {
-            return ad.price * 118
+            const price = ad.price * 118.32;
+            return getEndPrice(price);
         }
     }
 

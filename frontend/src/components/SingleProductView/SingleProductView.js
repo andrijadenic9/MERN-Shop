@@ -18,6 +18,7 @@ function SingleProductView() {
     const params = useParams();
     const dispatch = useDispatch();
     const symbol = useSelector(state => state.currencyStore.symbol);
+    const currency = useSelector(state => state.currencyStore.currency);
 
 
     useEffect(() => {
@@ -60,6 +61,34 @@ function SingleProductView() {
         dispatch(addItem(product))
     }
 
+    // * MAKING PRICESES LOOK
+    function getEndPrice(price) {
+        const endPrice = price.toFixed(2).split('');
+        if (endPrice.length > 6 && endPrice.length < 10) {
+            endPrice.splice(-6, 0, ',');
+        } else if (endPrice.length >= 10) {
+            endPrice.splice(-6, 0, ',');
+            endPrice.splice(-10, 0, ',');
+        }
+        return endPrice;
+    }
+
+    // * GETING PRICESES
+    function checkPrice() {
+        if (currency === 'USD') {
+            const price = product.price;
+            return getEndPrice(price);
+        }
+        if (currency === 'EUR') {
+            const price = product.price * 0.98;
+            return getEndPrice(price);
+        }
+        if (currency === 'RSD') {
+            const price = product.price * 118.32;
+            return getEndPrice(price);
+        }
+    }
+
     // TODO MAKE ARROWS TO SHOW NEXT AND PREVIOUS PRODUCT
 
     return (
@@ -85,7 +114,7 @@ function SingleProductView() {
                                 <p>{product.description}</p>
                                 <div className="details">
                                     <span className="discount"><span>discount</span> <span>{product.discountPercentage}%</span></span>
-                                    <span className="price">{product.price} {symbol}</span>
+                                    <span className="price">{checkPrice()} {symbol}</span>
                                 </div>
                                 <div className="add-to-cart-btn-wrapper">
                                     <button onClick={addToCart}>Add to cart</button>

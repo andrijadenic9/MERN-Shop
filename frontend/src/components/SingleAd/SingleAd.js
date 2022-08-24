@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { routeConfig } from "../../config/routeConfig";
+import Rating from "../Rating/Rating";
 import './SingleAd.scss';
 
 function SingleAd({ ad }) {
@@ -50,6 +51,7 @@ function SingleAd({ ad }) {
                     <div className="text-center">
                         <h5 className="card-title">{ad.title}</h5>
                         <p className="text-muted mb-4">{ad.brand}</p>
+                        {/* <Rating /> */}
                     </div>
                     <div>
                         <div className="d-flex justify-content-between">

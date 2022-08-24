@@ -1,0 +1,43 @@
+.stars-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+
+    input[type=radio] {
+        display: none;
+    }
+
+    .ratingstarFill {
+        color: black;
+        font-size: 1.7rem;
+        margin: 3px;
+    }
+}
+
+.btns-wrapper {
+    display: flex;
+    justify-content: space-between;
+
+    .cancel {
+        padding: 7px 15px;
+        background-color: green;
+        border: 1px solid green;
+        color: white;
+    }
+
+    .rateYes {
+        padding: 7px 15px;
+        background-color: tomato;
+        border: 1px solid tomato;
+        color: white;
+        cursor: pointer
+    }
+
+    .rateNo {
+        padding: 7px 15px;
+        background-color: silver;
+        border: 1px solid silver;
+        color: black;
+        cursor: not-allowed
+    }
+}

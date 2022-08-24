@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useState } from 'react';
 import Modal from 'react-modal';
 import AuthService from '../../../services/AuthService';
-import customStyles from './custom-modal-style';
+import customStyles from '../../../assets/js/custom-modal-style';
 import '../users.scss';
 
 function EditModal({ showModal, currentUser, renderView }) {

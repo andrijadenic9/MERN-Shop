@@ -135,4 +135,28 @@ function validateLogin(req, res, next) {
     next();
 }
 
+
+routes.put('/vote', (req, res) => {
+    const userID = req.body.userID;
+    const productID = req.body.productID;
+    Users.updateOne({ _id: userID }, { $push: { votedFor: productID } }, null, (err, data) => {
+        if (err) {
+            console.log(err, 'greskaaa');
+            res.send(err)
+        }
+        res.send('Uspesno')
+    })
+})
+
+routes.get('/get-vote/:id', (req, res) => {
+    const userID = req.params.id;
+    Users.find({ _id: userID }, (err, data) => {
+        if (err) {
+            console.log(err, 'greskaaa');
+            res.send(err)
+        }
+        res.send(data[0].votedFor);
+    })
+})
+
 module.exports = routes;

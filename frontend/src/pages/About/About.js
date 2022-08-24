@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import Rating from "../../components/Rating/Rating";
+import { routeConfig } from "../../config/routeConfig";
 import ShopService from "../../services/ShopService";
 
 function About() {
@@ -28,6 +31,7 @@ function About() {
                             <div className="text-center">
                                 <h5 className="card-title">{product.title}</h5>
                                 <p className="text-muted mb-4">{product.category}</p>
+                                <Rating ratingNumber={product.rating} />
                             </div>
                             <div>
                                 <div className="d-flex justify-content-between">
@@ -40,7 +44,7 @@ function About() {
                             <div className="d-flex justify-content-between total font-weight-bold mt-4">
                                 <span>{product.description}</span>
                             </div>
-                            {/* <button><Link to={routeConfig.PRODUCT_PAGE.realUrl(ad.id)}>View add</Link></button> */}
+                            <button><Link to={routeConfig.PRODUCT_PAGE.realUrl(product._id)}>View add</Link></button>
                         </div>
                     </div>
                 </div>

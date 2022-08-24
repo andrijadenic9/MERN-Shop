@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Modal from 'react-modal';
-import customStyles from './custom-modal-style';
+import customStyles from '../../../assets/js/custom-modal-style';
 import '../users.scss';
 import AuthService from '../../../services/AuthService';
 

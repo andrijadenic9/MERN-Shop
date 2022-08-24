@@ -19,8 +19,8 @@ const currencySlice = createSlice({
             if (state.currency === 'USD') state.symbol = '$'
             if (state.currency === 'EUR') state.symbol = '€'
             if (state.currency === 'RSD') state.symbol = 'дин'
-            console.log(state.currency, 'from redux');
-            console.log(state.symbol, 'from redux');
+            // console.log(state.currency, 'from redux');
+            // console.log(state.symbol, 'from redux');
         }
     }
 });

@@ -26,6 +26,14 @@ class AuthService {
     static deleteUser(userID) {
         return axios.delete(`/api/user/delete-user/${userID}`);
     }
+
+    static setVoting(body){
+        return axios.put('/api/user/vote', body);
+    }
+
+    static getVoting(id){
+        return axios.get(`/api/user/get-vote/${id}`)
+    }
 }
 
 export default AuthService;

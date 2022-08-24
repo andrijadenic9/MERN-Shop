@@ -22,6 +22,14 @@ class ShopService {
     static getProductFromDB() {
         return axios.get('/api/product/get-all-product-from-db');
     }
+
+    static getSingleProductFromDB(id) {
+        return axios.get(`/api/product/get-single-product-from-db/${id}`);
+    }
+
+    static setRatingStars(body) {
+        return axios.put('/shop/products/set-rating', body);
+    }
 }
 
 export default ShopService;

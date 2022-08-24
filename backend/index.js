@@ -202,6 +202,30 @@ app.post('/send-message', async (req, res) => {
     res.send();
 });
 
+
+// * SINGLE PRODUCT FORM DB
+app.get('/api/product/get-single-product-from-db/:id', (req, res) => {
+    Product.findOne({ _id: req.params.id }, (err, data) => {
+        if (err) return res.send(err, 'GRESKA');
+        if (data) res.send(data);
+    });
+});
+
+// * SET RATINGS
+app.put('/shop/products/set-rating', (req, res) => {
+    const allRatings = req.body.allRatings;
+    const averageRating = req.body.averageRating;
+    const id = req.body.id;
+
+    Product.updateOne(
+        { _id: id }, { allRatings: [...allRatings], rating: averageRating },
+        null, (error, data) => {
+            if (error) throw error;
+            res.send(data);
+        })
+})
+
+
 // * SERVER
 app.listen(serverConfig.port, err => {
     if (err) console.log('ERROR Message: ' + err);

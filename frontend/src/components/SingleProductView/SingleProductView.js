@@ -5,7 +5,9 @@ import { addItem } from '../../redux-store/cart/cartSlice';
 import ShopService from '../../services/ShopService';
 import './SingleProductView.scss';
 import { showLoader } from '../../redux-store/loader/loaderSlice';
-import Rating from '../Rating/Rating';
+import RatingStars from '../Rating/RatingStars';
+import RatingStarsModal from '../Rating/RatingStarsModal';
+import { ToastContainer, toast } from "react-toastify";
 
 function SingleProductView() {
 
@@ -20,7 +22,19 @@ function SingleProductView() {
     const dispatch = useDispatch();
     const symbol = useSelector(state => state.currencyStore.symbol);
     const currency = useSelector(state => state.currencyStore.currency);
+    const flg = useSelector(state => state.ratingStarsStore.flg);
 
+
+    useEffect(() => {
+        console.log('use eff...', flg);
+        if (flg) {
+            ShopService.getSingleProductFromDB(product._id)
+                .then(res => {
+                    if (res.data) setProduct(res.data)
+                })
+                .catch(err => console.log(err))
+        }
+    }, [flg]);
 
     useEffect(() => {
 
@@ -122,6 +136,26 @@ function SingleProductView() {
 
     // TODO MAKE ARROWS TO SHOW NEXT AND PREVIOUS PRODUCT
 
+
+    const [isModal, setIsModal] = useState(false);
+    const [getRatings, setGetRatings] = useState(0);
+
+    const openModal = (id, title) => {
+        if (localStorage.user) {
+            setIsModal(true);
+            ShopService.getRating(id)
+                .then(res => {
+                    console.log(res.data, "podaci");
+                    setGetRatings(res.data)
+                })
+                .catch(err => {
+                    console.log(err, "greska");
+                });
+        } else {
+            toast.info('Please login to vote');
+        }
+    }
+
     return (
         <>
             {noParamsLayout()}
@@ -143,7 +177,10 @@ function SingleProductView() {
                                 <div className="headings">
                                     {/* <p>{product.brand}</p> */}
                                     <h3>{product.title}</h3>
-                                    <Rating ratingNumber={product.rating} product={product} />
+                                    {/* <Rating ratingNumber={product.rating} singleProduct={product} /> */}
+                                    <div onClick={() => { openModal(product._id, product.title) }}>
+                                        <RatingStars ratingNumber={product.rating} product={product} />
+                                    </div>
                                 </div>
                                 <p>{product.description}</p>
                                 <div className="details">
@@ -157,7 +194,11 @@ function SingleProductView() {
                         </div>
                     </div>
                     : null
+
+                // <RatingStarsModal ad={ad} getRatings={getRatings} isModal={isModal} setIsModal={setIsModal} />
             }
+
+            <RatingStarsModal product={product} getRatings={getRatings} isModal={isModal} setIsModal={setIsModal} />
 
             {/* OVO JE ZA SHOP PAGE */}
             {/* {

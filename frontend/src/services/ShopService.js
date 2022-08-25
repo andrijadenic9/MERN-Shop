@@ -28,7 +28,11 @@ class ShopService {
     }
 
     static setRatingStars(body) {
-        return axios.put('/shop/products/set-rating', body);
+        return axios.put('/api/products/set-rating', body);
+    }
+
+    static getRating(id){
+        return axios.get(`/api/products/get-rating/${id}`);
     }
 }
 

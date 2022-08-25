@@ -212,7 +212,7 @@ app.get('/api/product/get-single-product-from-db/:id', (req, res) => {
 });
 
 // * SET RATINGS
-app.put('/shop/products/set-rating', (req, res) => {
+app.put('/api/products/set-rating', (req, res) => {
     const allRatings = req.body.allRatings;
     const averageRating = req.body.averageRating;
     const id = req.body.id;
@@ -223,6 +223,19 @@ app.put('/shop/products/set-rating', (req, res) => {
             if (error) throw error;
             res.send(data);
         })
+})
+
+// * GET RATINGS
+app.get('/api/products/get-rating/:id', (req, res) => {
+    const id = req.params.id;
+    Product.find({ _id: id }, (error, data) => {
+        if (error) {
+            console.log(error);
+            res.send(error)
+        }
+        console.log(data, 'vodeeee');
+        res.send({ allRatings: data[0].allRatings, rating: data[0].rating })
+    })
 })
 
 

@@ -14,7 +14,8 @@ const userSchema = new Schema({
     address: { type: String },
     city: { type: String },
     postCode: { type: String },
-    phoneNumber: { type: Number }
+    phoneNumber: { type: Number },
+    votedFor: {type: Array}
 });
 
 const UsersModel = mongoose.model('users', userSchema);

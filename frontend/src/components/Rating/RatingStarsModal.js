@@ -10,57 +10,14 @@ import { flg } from '../../redux-store/rating-stars/ratingStarsSlice';
 import AuthService from '../../services/AuthService';
 import ShopService from '../../services/ShopService';
 
-const starStyle = {
-    color: '#ffc107',
-    fontSize: '25px',
-}
+function RatingStarsModal({ product, getRatings, isModal, setIsModal }) {
 
-const ratingStarStyle = {
-    color: '#ffc107',
-    fontSize: '30px',
-    marginRight: '7px',
-    cursor: 'pointer'
-}
-
-function Rating({ ratingNumber, singleProduct }) {
-
-    // !!!!!!!!!!!!!!! OVO CELO MOZE DA SE OBRISE JER SE NIGDE NE UCITAVA OVA KOMPONENTA
-
-    let ratingStars = [];
-
-    getStars();
-    function getStars() {
-        for (let i = 0; i < 5; i++) {
-            if (ratingNumber > i) {
-                if (ratingNumber > 0.5 + i) ratingStars.push(<span><FaStar style={starStyle} /></span>);
-                else ratingStars.push(<span><FaStarHalfAlt style={starStyle} /></span>);
-            } else {
-                ratingStars.push(<span><FaRegStar style={starStyle} /></span>);
-            }
-        }
-    }
-
-    const flg = useSelector(state => state.ratingStarsStore.flg);
-    const [product, setProduct] = useState(singleProduct);
-    const [isModal, setIsModal] = useState(false);
     const { user } = useSelector(state => state.userStore);
     const [hover, setHover] = useState(null);
     const [rating, setRating] = useState(null);
     const dispatch = useDispatch();
     const [isDisabled, setIsDisabled] = useState(true);
-    const [getRatings, setGetRatings] = useState(0);
     let aVotes;
-
-    useEffect(() => {
-        console.log('use eff...', flg);
-        if (flg) {
-            ShopService.getSingleProductFromDB(product._id)
-                .then(res => {
-                    if (res.data) setProduct(res.data)
-                })
-                .catch(err => console.log(err))
-        }
-    }, [flg]);
 
     const rateProduct = async (rating, id) => {
         dispatch(showLoader(true))
@@ -98,9 +55,6 @@ function Rating({ ratingNumber, singleProduct }) {
                     dispatch(showLoader(false))
                     toast.success('You are successfully voted!');
                     dispatch(flg('test'))
-                    // setTimeout(() => {
-                    //     window.location.reload(false);
-                    // }, 3000);
                 })
                 .catch(err => {
                     console.log(err, "greska");
@@ -114,7 +68,6 @@ function Rating({ ratingNumber, singleProduct }) {
         }
     }
 
-
     const enableRating = (ratingValue) => {
         setRating(ratingValue);
         setIsDisabled(false);
@@ -126,26 +79,8 @@ function Rating({ ratingNumber, singleProduct }) {
         setIsModal(false);
     }
 
-    const openModal = (id, title) => {
-        if (localStorage.user) {
-            setIsModal(true);
-            ShopService.getRating(id)
-                .then(res => {
-                    console.log(res.data, "podaci");
-                    setGetRatings(res.data)
-                })
-                .catch(err => {
-                    console.log(err, "greska");
-                });
-        } else {
-            toast.info('Please login to vote');
-        }
-    }
-
     return (
         <>
-            <div style={{ display: 'inline-flex', gap: '5px', cursor: 'pointer' }} onClick={() => { openModal(product._id, product.title) }}>{ratingStars.map(star => star)}</div>
-
             {product && product.hasOwnProperty('_id') && <Modal isOpen={isModal} ariaHideApp={false} style={customStyles} centered>
                 <h3 className='heading'>{product.title}</h3>
                 <div className="stars-wrapper">
@@ -188,4 +123,4 @@ function Rating({ ratingNumber, singleProduct }) {
     )
 }
 
-export default Rating;
+export default RatingStarsModal;

@@ -142,7 +142,8 @@ routes.put('/vote', (req, res) => {
     Users.updateOne({ _id: userID }, { $push: { votedFor: productID } }, null, (err, data) => {
         if (err) {
             console.log(err, 'greskaaa');
-            res.send(err)
+            res.send(err);
+            return;
         }
         res.send('Uspesno')
     })
@@ -153,8 +154,10 @@ routes.get('/get-vote/:id', (req, res) => {
     Users.find({ _id: userID }, (err, data) => {
         if (err) {
             console.log(err, 'greskaaa');
-            res.send(err)
+            res.send(err);
+            return;
         }
+        console.log(data);
         res.send(data[0].votedFor);
     })
 })

@@ -24,7 +24,7 @@ function RatingStars({ ratingNumber }) {
 
     return (
         <>
-            <div style={{ display: 'inline-flex', gap: '5px', cursor: 'pointer' }}>{ratingStars.map(star => star)}</div>
+            <div className="rating-stars">{ratingStars.map(star => star)}</div>
         </>
     )
 }

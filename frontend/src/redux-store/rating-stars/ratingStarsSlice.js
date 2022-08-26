@@ -6,7 +6,6 @@ const ratingStarsSlice = createSlice({
     reducers: {
         setRatingStars:(state,action)=>{
             state.ratingStars = action.payload
-            console.log(state.ratingStars, "sdadas")
         },
         flg:(state,action)=>{
             state.flg = action.payload + new Date().getTime()

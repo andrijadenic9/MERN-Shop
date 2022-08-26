@@ -1,3 +1,9 @@
+.rating-stars {
+    display: inline-flex;
+    gap: 5px;
+    cursor: pointer;
+}
+
 .stars-wrapper {
     display: flex;
     justify-content: center;

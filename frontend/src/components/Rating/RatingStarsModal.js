@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { FaRegStar, FaStar, FaStarHalfAlt } from 'react-icons/fa';
+import React, { useState } from 'react';
+import { FaStar } from 'react-icons/fa';
 import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import customStyles from '../../assets/js/custom-modal-style';

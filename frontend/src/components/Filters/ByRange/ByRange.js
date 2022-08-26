@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../filters.scss';
 
-function ByRange({ allAds, setAllAds, constAds }) {
+function ByRange({ allProducts, setAllProducts, constAds }) {
 
     const [filterValue, setFilterValue] = useState('');
     const [maxPrice, setMaxPrice] = useState(0);
@@ -12,13 +12,13 @@ function ByRange({ allAds, setAllAds, constAds }) {
         let price = e.target.value;
         setFilterValue(price);
 
-        let sortedAds = [...allAds];
+        let sortedAds = [...allProducts];
         if (parseInt(price) !== 0) {
             // ? and give me back array with ads witch price is smaller or equal than selected price by user
             sortedAds = constAds.filter(item => item.price <= parseInt(price));
-            setAllAds(sortedAds);
+            setAllProducts(sortedAds);
         } else {
-            setAllAds(constAds);
+            setAllProducts(constAds);
         }
     }
 

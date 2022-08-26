@@ -205,9 +205,17 @@ app.post('/send-message', async (req, res) => {
 
 // * SINGLE PRODUCT FORM DB
 app.get('/api/product/get-single-product-from-db/:id', (req, res) => {
+    console.log(req.params, 'PARAMSSSS');
     Product.findOne({ _id: req.params.id }, (err, data) => {
-        if (err) return res.send(err, 'GRESKA');
-        if (data) res.send(data);
+        if (err) {
+            console.log(err, 'greskaa');
+            res.send(err);
+            return;
+        }
+        if (data) {
+            console.log(data, 'dataaa');
+            res.send(data);
+        }
     });
 });
 

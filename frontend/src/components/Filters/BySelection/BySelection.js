@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../filters.scss';
 
-function BySelection({ allAds, setAllAds, constAds }) {
+function BySelection({ allProducts, setAllProducts, constAds }) {
 
     const [selected, setSelected] = useState('default');
 
@@ -10,18 +10,18 @@ function BySelection({ allAds, setAllAds, constAds }) {
         let sortedAds;
 
         if (selected === "default") {
-            setAllAds(constAds);
+            setAllProducts(constAds);
         } else if (selected === "low-price") {
             // ? go throught all my copy ads and give me back array of ads where price goes from lower to higher 
-            sortedAds = [...allAds];
+            sortedAds = [...allProducts];
             sortedAds = sortedAds.sort((a, b) => a.price - b.price);
-            setAllAds(sortedAds);
+            setAllProducts(sortedAds);
 
         } else if (selected === "high-price") {
             // ? go throught all my copy ads and give me back array of ads where price goes from higher to lower 
-            sortedAds = [...allAds];
+            sortedAds = [...allProducts];
             sortedAds = sortedAds.sort((a, b) => b.price - a.price);
-            setAllAds(sortedAds);
+            setAllProducts(sortedAds);
         }
     }, [selected]);
 

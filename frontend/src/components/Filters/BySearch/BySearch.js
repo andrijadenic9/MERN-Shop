@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../filters.scss';
 
-function BySearch({ allAds, setAllAds, constAds }) {
+function BySearch({ allProducts, setAllProducts, constAds }) {
 
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -9,12 +9,12 @@ function BySearch({ allAds, setAllAds, constAds }) {
     // * GO THROUGH ALL ADS AND GIVE ME BACK IF SEARCHED TERM IS SAME AS AD TITLE OR DESCRIPTION
     useEffect(() => {
         if (searchTerm !== '') {
-            let sortedAds = [...allAds]
+            let sortedAds = [...allProducts]
             // ? filter through all my copy ads and where you find ad title or ad description include letters as searched term, fill my new array with these ads
             sortedAds = constAds.filter(item => item.title.toLowerCase().includes(searchTerm.toLowerCase()) || item.description.toLowerCase().includes(searchTerm.toLowerCase()));
-            setAllAds(sortedAds);
+            setAllProducts(sortedAds);
         } else {
-            setAllAds(constAds);
+            setAllProducts(constAds);
         }
     }, [searchTerm])
 

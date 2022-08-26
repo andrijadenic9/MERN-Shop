@@ -13,7 +13,6 @@ function SingleProductView() {
 
     // * trenutno nicemu ne sluzi
     const [isAPIFinished, setIsAPIFinished] = useState(false);
-
     const [isAdded, setIsAdded] = useState(false);
 
     const [isParamsValid, setIsParamsValid] = useState(true);
@@ -78,6 +77,7 @@ function SingleProductView() {
                         // * without passing params.productID in getSingleProductFromDB
                         // setProduct(response.data.products[params.productID - 1]);
                         setProduct(response.data);
+                        console.log(response.data);
                     }
                     if (!response.data) {
                         setIsParamsValid(false);
@@ -194,8 +194,6 @@ function SingleProductView() {
                         </div>
                     </div>
                     : null
-
-                // <RatingStarsModal ad={ad} getRatings={getRatings} isModal={isModal} setIsModal={setIsModal} />
             }
 
             <RatingStarsModal product={product} getRatings={getRatings} isModal={isModal} setIsModal={setIsModal} />

@@ -52,7 +52,8 @@ function ShopCart() {
             return (
                 <div className="react-index" key={index}>
                     <div className="shop-cart-item">
-                        <img src={item.images[0]} alt={item.title} />
+                        <img src={`http://localhost:4000/uploadedFiles/${item.img}`} alt={item.title} />
+                        {/* <img src={item.images[0]} alt={item.title} /> */}
                         <div className="content">
                             <div>{item.title}</div>
                             <div className="count">

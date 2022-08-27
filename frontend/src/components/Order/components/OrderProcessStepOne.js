@@ -32,7 +32,8 @@ function OrderProcessStepOne() {
                 <tr key={index}>
                     <th scope="col">{index + 1}</th>
                     <td scope="col">
-                        <img src={item.images[0]} alt={item.title} />
+                        <img src={`http://localhost:4000/uploadedFiles/${item.img}`} alt={item.title} />
+                        {/* <img src={item.images[0]} alt={item.title} /> */}
                     </td>
                     <td scope="col">{item.title}</td>
                     <td scope="col" className="count">

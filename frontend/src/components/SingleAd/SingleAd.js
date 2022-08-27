@@ -68,7 +68,7 @@ function SingleAd({ product }) {
             <div className="col-md-6 col-lg-4 col-xl-3" key={product._id}>
                 <div className="card text-black">
                     <i className="fab fa-apple fa-lg pt-3 pb-1 px-3"></i>
-                    <img src={product.img} className="card-img-top" alt="Apple Computer" />
+                    <img src={`http://localhost:4000/uploadedFiles/${product.img}`} className="card-img-top" alt={product.title} />
                     <div className="card-body">
                         <div className="text-center">
                             <h5 className="card-title">{product.title}</h5>

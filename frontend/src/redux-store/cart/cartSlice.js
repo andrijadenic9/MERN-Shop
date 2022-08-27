@@ -15,7 +15,7 @@ const cartSlice = createSlice({
 
             // * map trought cart and return item if already exist
             let doubleItem = state.cart.find((item, index) => {
-                if (item.id === AddedItem.id) {
+                if (item._id === AddedItem._id) {
                     doubleItemIndex = index;
                     return item;
                 }

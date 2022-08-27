@@ -26,7 +26,7 @@ function RatingStarsModal({ product, getRatings, isModal, setIsModal }) {
         await AuthService.getVoting(user._id)
             .then(res => {
                 aVotes = res.data
-                console.log(res.data, 'votedFor ARRAY');
+                // console.log(res.data, 'votedFor ARRAY');
             })
             .catch(err => {
                 console.log(err, 'greska');
@@ -117,8 +117,6 @@ function RatingStarsModal({ product, getRatings, isModal, setIsModal }) {
                     <button disabled={isDisabled} className={isDisabled ? "rateNo" : "rateYes"} onClick={(e) => rateProduct(rating, product._id)}>Rate</button>
                 </div>
             </Modal>}
-
-            <ToastContainer />
         </>
     )
 }

@@ -77,8 +77,14 @@ app.post('/api/admin/add-product', (req, res) => {
 })
 
 app.get('/uploadedFiles/:imageName', (req, res) => {
-    fs.readFile(__dirname + "/uploadedFiles" + req.params.imageName, (err, data) => {
-        if (err) return res.send('no file');
+    console.log(req.params, 'PARAMSS');
+    console.log(req.params.imageName, 'IMAGEEE');
+    console.log(__dirname + "/uploadedFiles/" + req.params.imageName);
+    fs.readFile(__dirname + "/uploadedFiles/" + req.params.imageName, (err, data) => {
+        if (err) {
+            res.send('no file');
+            return;
+        }
         res.setHeader('Content-Type', 'image/jpg');
         res.setHeader('Content-Length', ''); // Image size here
         res.setHeader('Access-Control-Allow-Origin', '*'); // If needs to be public
@@ -205,7 +211,6 @@ app.post('/send-message', async (req, res) => {
 
 // * SINGLE PRODUCT FORM DB
 app.get('/api/product/get-single-product-from-db/:id', (req, res) => {
-    console.log(req.params, 'PARAMSSSS');
     Product.findOne({ _id: req.params.id }, (err, data) => {
         if (err) {
             console.log(err, 'greskaa');
@@ -213,7 +218,7 @@ app.get('/api/product/get-single-product-from-db/:id', (req, res) => {
             return;
         }
         if (data) {
-            console.log(data, 'dataaa');
+            // console.log(data, 'dataaa');
             res.send(data);
         }
     });
@@ -241,7 +246,7 @@ app.get('/api/products/get-rating/:id', (req, res) => {
             console.log(error);
             res.send(error)
         }
-        console.log(data, 'vodeeee');
+        // console.log(data, 'vodeeee');
         res.send({ allRatings: data[0].allRatings, rating: data[0].rating })
     })
 })

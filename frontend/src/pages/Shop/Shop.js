@@ -80,7 +80,7 @@ function Shop() {
                 {
                     allProducts.length > 0 ?
                         allProducts.map(product => {
-                            return <SingleAd product={product} key={product.id} />
+                            return <SingleAd product={product} key={product._id} />
                         })
                         : null
                 }

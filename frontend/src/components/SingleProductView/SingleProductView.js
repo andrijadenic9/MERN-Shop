@@ -77,7 +77,7 @@ function SingleProductView() {
                         // * without passing params.productID in getSingleProductFromDB
                         // setProduct(response.data.products[params.productID - 1]);
                         setProduct(response.data);
-                        console.log(response.data);
+                        // console.log(response.data);
                     }
                     if (!response.data) {
                         setIsParamsValid(false);
@@ -140,7 +140,7 @@ function SingleProductView() {
     const [isModal, setIsModal] = useState(false);
     const [getRatings, setGetRatings] = useState(0);
 
-    const openModal = (id, title) => {
+    const openModal = (id) => {
         if (localStorage.user) {
             setIsModal(true);
             ShopService.getRating(id)
@@ -166,7 +166,7 @@ function SingleProductView() {
                     <div className="container">
                         <div className="row">
                             <div className="col-6 single-product-picture">
-                                <img src={product.img} alt={product.title} />
+                                <img src={`http://localhost:4000/uploadedFiles/${product.img}`} alt={product.title} />
                                 <div className="details">
                                     <span className="category"><span>cat: </span><span>{product.category}</span></span>
                                     {/* <span className="rating"><span>rating:</span> <span>{product.rating}</span></span> */}

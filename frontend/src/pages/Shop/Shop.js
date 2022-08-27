@@ -10,7 +10,7 @@ import ByRange from '../../components/Filters/ByRange/ByRange';
 function Shop() {
 
     const dispatch = useDispatch();
-    const [constAds, setConstAds] = useState([]);
+    const [constProducts, setConstProducts] = useState([]);
     const [allProducts, setAllProducts] = useState('');
 
     useEffect(() => {
@@ -20,6 +20,8 @@ function Shop() {
                 if (res && res.status === 200) {
                     console.log(res);
                     setAllProducts(res.data)
+                    setConstProducts(res.data);
+
                 }
             })
             .catch(err => {
@@ -65,32 +67,13 @@ function Shop() {
     //         })
     // }, []);
 
-    // const addProduct = (e) => {
-    //     e.preventDefault();
-    //     ShopService.addNewProduct({
-    //         img: 'https://img.gigatron.rs/img/products/large/45cbe9f9259d774b35ad767eed8ec815.png',
-    //         title: 'LENOVO IdeaPad Gaming 3 15ACH6',
-    //         description: 'EAN:214019 Model procesora:AMD Cezanne Ryzen 5 5600H do 4.2GHz Dijagonala ekrana:15.6" Tip grafičke karte:GeForce GTX 1650 RAM (memorija):8GB HDD SSD:512GB SSD',
-    //         category: 'tehnology',
-    //         price: 750,
-    //         rating: 2.21,
-    //         userId: "629b988fb09d209265018eec",
-    //         allRatings: []
-    //     })
-    //         .then(res => {
-    //             console.log(res.data);
-    //         })
-    //         .catch(err => {
-
-    //         })
-    // }
     return (
         <div className="container py-5">
             {/* <button onClick={addProduct}>Add new product</button> */}
             <div className="filters">
-                <ByRange allProducts={allProducts} setAllProducts={setAllProducts} constAds={constAds} />
-                <BySearch allProducts={allProducts} setAllProducts={setAllProducts} constAds={constAds} />
-                <BySelection allProducts={allProducts} setAllProducts={setAllProducts} constAds={constAds} />
+                <ByRange allProducts={allProducts} setAllProducts={setAllProducts} constProducts={constProducts} />
+                <BySearch allProducts={allProducts} setAllProducts={setAllProducts} constProducts={constProducts} />
+                <BySelection allProducts={allProducts} setAllProducts={setAllProducts} constProducts={constProducts} />
             </div>
 
             <div className="row justify-content-center">

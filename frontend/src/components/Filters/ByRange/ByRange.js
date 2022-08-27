@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../filters.scss';
 
-function ByRange({ allProducts, setAllProducts, constAds }) {
+function ByRange({ allProducts, setAllProducts, constProducts }) {
 
     const [filterValue, setFilterValue] = useState('');
     const [maxPrice, setMaxPrice] = useState(0);
@@ -12,27 +12,27 @@ function ByRange({ allProducts, setAllProducts, constAds }) {
         let price = e.target.value;
         setFilterValue(price);
 
-        let sortedAds = [...allProducts];
+        let sortedProducts = [...allProducts];
         if (parseInt(price) !== 0) {
             // ? and give me back array with ads witch price is smaller or equal than selected price by user
-            sortedAds = constAds.filter(item => item.price <= parseInt(price));
-            setAllProducts(sortedAds);
+            sortedProducts = constProducts.filter(item => item.price <= parseInt(price));
+            setAllProducts(sortedProducts);
         } else {
-            setAllProducts(constAds);
+            setAllProducts(constProducts);
         }
     }
 
-    // * WHEN 'constAds' ARIVES AT COMPONENT MAKE ARRAY FULL OF ALL PRICES AND GIVE ME THE HIGHEST ONE
+    // * WHEN 'constProducts' ARIVES AT COMPONENT MAKE ARRAY FULL OF ALL PRICES AND GIVE ME THE HIGHEST ONE
     useEffect(() => {
         let allPrices = [];
         // ? go throught all ads and fill new array with prices only
-        for (let i = 0; i < constAds.length; i++) {
-            allPrices.push(constAds[i].price);
+        for (let i = 0; i < constProducts.length; i++) {
+            allPrices.push(constProducts[i].price);
         }
         // ? give me back the highest price
         let highestPrice = Math.max(...allPrices);
         setMaxPrice(highestPrice);
-    }, [constAds]);
+    }, [constProducts]);
 
     return (
         <div className="range">

@@ -12,9 +12,7 @@ function SingleAd({ product }) {
     const symbol = useSelector(state => state.currencyStore.symbol);
     const currency = useSelector(state => state.currencyStore.currency);
     useEffect(() => {
-        // console.log(currency, 'CUR');
-        // console.log(symbol, 'SYMB');
-        console.log(product);
+        // console.log(product);
     }, [currency])
 
     // * MAKING PRICESES LOOK
@@ -48,7 +46,7 @@ function SingleAd({ product }) {
     const [isModal, setIsModal] = useState(false);
     const [getRatings, setGetRatings] = useState(0);
 
-    const openModal = (id, title) => {
+    const openModal = (id) => {
         if (localStorage.user) {
             setIsModal(true);
             ShopService.getRating(id)
@@ -67,7 +65,7 @@ function SingleAd({ product }) {
     return (
         <>
             {/* FROM DB */}
-            <div className="col-md-6 col-lg-4 col-xl-3" key={product.id}>
+            <div className="col-md-6 col-lg-4 col-xl-3" key={product._id}>
                 <div className="card text-black">
                     <i className="fab fa-apple fa-lg pt-3 pb-1 px-3"></i>
                     <img src={product.img} className="card-img-top" alt="Apple Computer" />

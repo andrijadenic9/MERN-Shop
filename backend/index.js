@@ -77,9 +77,6 @@ app.post('/api/admin/add-product', (req, res) => {
 })
 
 app.get('/uploadedFiles/:imageName', (req, res) => {
-    console.log(req.params, 'PARAMSS');
-    console.log(req.params.imageName, 'IMAGEEE');
-    console.log(__dirname + "/uploadedFiles/" + req.params.imageName);
     fs.readFile(__dirname + "/uploadedFiles/" + req.params.imageName, (err, data) => {
         if (err) {
             res.send('no file');

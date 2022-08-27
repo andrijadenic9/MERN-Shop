@@ -18,6 +18,18 @@ class AdminService {
     //     return axios.put('/api/admin/edit-user', user);
     // }
 
+    static getProductsFromDB() {
+        return axios.get('/api/product/get-all-product-from-db');
+    }
+
+    static updateProduct(product) {
+        return axios.put('/api/admin/update-product', product);
+    }
+
+    static deleteProduct(product) {
+        return axios.delete(`/api/admin/delete-product/${product}`);
+    }
+
 }
 
 export default AdminService;

@@ -4,6 +4,7 @@ import SingleAd from '../../components/SingleAd/SingleAd';
 import { useDispatch, useSelector } from 'react-redux';
 import { showLoader } from '../../redux-store/loader/loaderSlice';
 import BySelection from '../../components/Filters/BySelection/BySelection';
+import { ToastContainer, toast } from "react-toastify";
 import BySearch from '../../components/Filters/BySearch/BySearch';
 import ByRange from '../../components/Filters/ByRange/ByRange';
 
@@ -15,7 +16,7 @@ function Shop() {
 
     useEffect(() => {
         dispatch(showLoader(true));
-        ShopService.getProductFromDB()
+        ShopService.getProductsFromDB()
             .then(res => {
                 if (res && res.status === 200) {
                     console.log(res);
@@ -37,7 +38,7 @@ function Shop() {
     useEffect(() => {
         console.log('use eff...', flg);
         if (flg) {
-            ShopService.getProductFromDB()
+            ShopService.getProductsFromDB()
                 .then(res => {
                     if (res.data) setAllProducts(res.data)
                 })
@@ -84,6 +85,8 @@ function Shop() {
                         })
                         : null
                 }
+
+                <ToastContainer />
             </div>
         </div>
 

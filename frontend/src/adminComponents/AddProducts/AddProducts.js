@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { productCategories } from '../../config/productCategories';
 import AdminService from '../../services/AdminService';
 import './add-products.scss';
 
@@ -11,6 +12,7 @@ function AddProducts() {
 
     useEffect(() => {
         console.log(product);
+        console.log(productCategories, 'adsad');
     }, [product])
 
     const onSubmit = (e) => {
@@ -41,6 +43,7 @@ function AddProducts() {
         setFile(e.target.files[0])
     }
 
+
     return (
         <>
             <h1>Add Product</h1>
@@ -57,9 +60,14 @@ function AddProducts() {
                     </div>
                     <div className="form-floating mb-3">
                         <select className="form-select" id="category" aria-label="Category" onChange={handleInputs}>
-                            <option value="technology">Technology</option>
+                            {/* <option value="technology">Technology</option>
                             <option value="art">Art</option>
-                            <option value="cars">Cars</option>
+                            <option value="cars">Cars</option> */}
+                            {
+                                productCategories.map((category) => {
+                                    return <option value={category.toLocaleLowerCase()}>{category}</option>
+                                })
+                            }
                         </select>
                         <label htmlFor="category">Category</label>
                     </div>

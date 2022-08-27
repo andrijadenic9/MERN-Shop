@@ -21,6 +21,29 @@ routes.get('/get-all-stats', (req, res) => {
 
 });
 
+routes.put('/update-product', (req, res) => {
+    console.log(req.body, 'izmenjeni product');
+
+    Product.updateOne({_id: req.body._id}, {$set: req.body}, (err, data)=>{
+        if(err) {
+            res.send(err);
+            return;
+        }
+        if(data) res.send(data);
+    })
+})
+
+routes.delete('/delete-product/:productID', (req, res) => {
+    console.log(req.params.productID);
+    Product.deleteOne({_id: req.params.productID}, (err, data)=>{
+        if(err) {
+            res.send(err);
+            return;
+        }
+        if(data) res.send(data);
+    })
+})
+
 routes.get('/get-all-users', (req, res) => {
     Users.find((err, data) => {
         if (err) {

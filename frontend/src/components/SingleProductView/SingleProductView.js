@@ -198,6 +198,7 @@ function SingleProductView() {
 
             <RatingStarsModal product={product} getRatings={getRatings} isModal={isModal} setIsModal={setIsModal} />
 
+            <ToastContainer />
             {/* OVO JE ZA SHOP PAGE */}
             {/* {
                 product && product.hasOwnProperty('id') ?

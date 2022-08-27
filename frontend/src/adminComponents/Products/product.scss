@@ -2,3 +2,121 @@
     display: flex;
     justify-content: space-between;
 }
+
+label {
+    cursor: pointer;
+}
+
+.btns-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.table-container {
+    height: 100vh;
+
+    table {
+        display: flex;
+        flex-flow: column;
+        height: 100%;
+        width: 100%;
+        background-color: #212529;
+
+        & thead {
+            display: table;
+            flex: 0 0 auto;
+            width: calc(100% - 13px);
+
+            & tr {
+                & th:nth-child(1) {
+                    width: 5%;
+                }
+
+                & th:nth-child(2) {
+                    width: 15%;
+                }
+
+                & th:nth-child(3) {
+                    width: 25%;
+                }
+
+                & th:nth-child(4) {
+                    width: 15%;
+                }
+
+                & th:nth-child(5) {
+                    width: 10%;
+                }
+
+                & th:nth-child(6) {
+                    width: 10%;
+                }
+
+                & th:nth-child(7) {
+                    width: 20%;
+                }
+            }
+        }
+
+        & tbody {
+            flex: 1 1 auto;
+            display: block;
+            overflow-y: scroll;
+
+            & tr {
+                width: 100%;
+                display: table;
+                border-bottom: 0px;
+                border-style: unset;
+
+                & th:nth-child(1) {
+                    width: 5%;
+                }
+
+                & td:nth-child(2) {
+                    width: 15%;
+                }
+
+                & td:nth-child(3) {
+                    width: 25%;
+                }
+
+                & td:nth-child(4) {
+                    width: 15%;
+                }
+
+                & td:nth-child(5) {
+                    width: 10%;
+                }
+
+                & td:nth-child(6) {
+                    width: 10%;
+                }
+
+                & td:nth-child(7) {
+                    width: 20%;
+                }
+
+                & td {
+                    .btns-wrapper {
+                        display: flex;
+                        justify-content: center;
+                        gap: 15px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #323539;
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+    background: #323539;
+}

@@ -19,7 +19,7 @@ function Shop() {
         ShopService.getProductsFromDB()
             .then(res => {
                 if (res && res.status === 200) {
-                    console.log(res);
+                    // console.log(res);
                     setAllProducts(res.data)
                     setConstProducts(res.data);
 
@@ -36,7 +36,7 @@ function Shop() {
     const flg = useSelector(state => state.ratingStarsStore.flg);
 
     useEffect(() => {
-        console.log('use eff...', flg);
+        // console.log('use eff...', flg);
         if (flg) {
             ShopService.getProductsFromDB()
                 .then(res => {

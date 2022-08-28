@@ -41,7 +41,7 @@ function Statistics() {
                         </div>
                         <div className="col-md-3">
                             <h3>Products</h3>
-                            <p>N/A</p>
+                            <p>{numbers.products}</p>
                         </div>
                         <div className="col-md-3">
                             <h3>Emails</h3>

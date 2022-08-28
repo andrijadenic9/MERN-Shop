@@ -62,6 +62,8 @@ function EditProductModal({ showModal, currentProduct, renderView }) {
             })
     }
 
+    // TODO TREBA DODATI POLJE ZA PROMENU IMGA
+
     return (
         <>
             <Modal isOpen={true} ariaHideApp={false} style={customStyles} centered>

@@ -47,7 +47,7 @@ export const routeConfig = {
     DASHBOARD_EMAILS: {
         url: 'emails'
     },
-    DASHBOARD_SUBSCRIPTIONS: {
-        url: 'subscriptions'
+    DASHBOARD_CATEGORIES: {
+        url: 'categories'
     }
 }

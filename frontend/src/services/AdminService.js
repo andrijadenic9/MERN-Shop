@@ -10,6 +10,10 @@ class AdminService {
         return axios.get('/api/admin/get-all-users');
     }
 
+    static getAllCategories() {
+        return axios.get('/api/admin/get-all-categories');
+    }
+
     static addProduct(product) {
         return axios.post('/api/admin/add-product', product);
     }
@@ -26,8 +30,16 @@ class AdminService {
         return axios.put('/api/admin/update-product', product);
     }
 
-    static deleteProduct(product) {
-        return axios.delete(`/api/admin/delete-product/${product}`);
+    static updateCategory(category) {
+        return axios.put('/api/admin/update-category', category);
+    }
+
+    static deleteProduct(id) {
+        return axios.delete(`/api/admin/delete-product/${id}`);
+    }
+
+    static deleteCategory(id) {
+        return axios.delete(`/api/admin/delete-category/${id}`)
     }
 
 }

@@ -17,7 +17,7 @@ export const ADMIN_SIDEBAR_CONFIG = [
     {
         name: 'Products',
         url: 'products',
-        icon: 'ion-ios-pricetags'
+        icon: 'ion-cube'
     },
     {
         name: 'Emails',
@@ -25,8 +25,8 @@ export const ADMIN_SIDEBAR_CONFIG = [
         icon: 'ion-email'
     },
     {
-        name: 'Subscriptions',
-        url: 'subscriptions',
-        icon: 'ion-heart'
+        name: 'Categories',
+        url: 'categories',
+        icon: 'ion-ios-pricetags'
     }
 ]

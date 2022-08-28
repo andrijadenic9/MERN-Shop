@@ -23,7 +23,7 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import Users from './adminComponents/Users/Users';
 import Products from './adminComponents/Products/Products';
 import Emails from './adminComponents/Emails/Emails';
-import Subscriptions from './adminComponents/Subscriptions/Subscriptions';
+import Categories from './adminComponents/Categories/Categories';
 import Statistics from './adminComponents/Statistics';
 import AddProducts from './adminComponents/AddProducts/AddProducts';
 
@@ -80,7 +80,8 @@ function App() {
             <Route path={routeConfig.DASHBOARD_PRODUCTS.url} element={<Products />} />
             <Route path={routeConfig.DASHBOARD_ADD_PRODUCTS.url} element={<AddProducts />} />
             <Route path={routeConfig.DASHBOARD_EMAILS.url} element={<Emails />} />
-            <Route path={routeConfig.DASHBOARD_SUBSCRIPTIONS.url} element={<Subscriptions />} />
+            {/* <Route path={routeConfig.DASHBOARD_SUBSCRIPTIONS.url} element={<Subscriptions />} /> */}
+            <Route path={routeConfig.DASHBOARD_CATEGORIES.url} element={<Categories />} />
           </Route>
         </Routes>}
       </main>

@@ -18,6 +18,10 @@ class AdminService {
         return axios.post('/api/admin/add-product', product);
     }
 
+    static addCategory(category) {
+        return axios.post('/api/admin/add-category', category);
+    }
+
     // static editUser(user){
     //     return axios.put('/api/admin/edit-user', user);
     // }

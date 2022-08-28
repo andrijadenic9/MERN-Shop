@@ -61,7 +61,7 @@ function Products() {
 
     return (
         <>
-            <div className="table-container">
+            <div className="table-product-container">
                 <table className="table table-striped table-bordered table-hover table-dark">
                     <thead>
                         <tr>

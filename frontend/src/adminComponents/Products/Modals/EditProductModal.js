@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Modal from 'react-modal';
 import customStyles from '../../../assets/js/custom-modal-style';
-import { productCategories } from '../../../config/productCategories';
 import AdminService from '../../../services/AdminService';
 import '../product.scss';
 
@@ -20,10 +19,21 @@ function EditProductModal({ showModal, currentProduct, renderView }) {
     const [isAPIError, setIsAPIError] = useState(false);
     const [isAPIFinished, setIsAPIFinished] = useState(false);
     const [isValidForm, setIsValidForm] = useState(true);
+    const [allCategories, setAllCategories] = useState('');
 
-    // useEffect(() => {
-    //     console.log(otherCategories, 'asadasa');
-    // }, [otherCategories])
+
+    useEffect(() => {
+        AdminService.getAllCategories()
+            .then(res => {
+                if (res.status === 200) {
+                    setAllCategories(res.data);
+                    // console.log(res.data);
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }, [])
 
     const handleEditInputs = (e) => {
         newProduct[e.target.name] = e.target.value;
@@ -104,9 +114,9 @@ function EditProductModal({ showModal, currentProduct, renderView }) {
                                     aria-selected defaultValue={currentProduct.category}
                                     onChange={handleEditInputs}
                                 >
-                                    {
-                                        productCategories.map(category => {
-                                            return <option value={category.toLocaleLowerCase()}>{category}</option>
+                                    {allCategories &&
+                                        allCategories.map(category => {
+                                            return <option value={category.nameLower}>{category.categoryName}</option>
                                         })
                                     }
                                 </select>

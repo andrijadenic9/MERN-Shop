@@ -59,7 +59,7 @@ function Users() {
 
     return (
         <>
-            <div className="table-container">
+            <div className="table-users-container">
                 <table className="table table-striped table-bordered table-hover table-dark">
                     <thead>
                         <tr>

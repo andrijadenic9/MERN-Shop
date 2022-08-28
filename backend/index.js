@@ -69,7 +69,7 @@ app.post('/api/admin/add-product', (req, res) => {
             } else {
                 const newProduct = new Product({ ...product, img: fileName });
                 const saveNewProduct = await newProduct.save();
-                console.log(saveNewProduct, 'saved producttt');
+                // console.log(saveNewProduct, 'saved producttt');
                 res.send(saveNewProduct || 'Product not saved');
             }
         });

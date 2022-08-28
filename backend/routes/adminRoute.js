@@ -12,6 +12,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(fileUpload());
 
+// * GET ALL
 routes.get('/get-all-stats', (req, res) => {
     let userNumber;
     let emailNumber;
@@ -24,6 +25,48 @@ routes.get('/get-all-stats', (req, res) => {
 
 });
 
+routes.get('/get-all-users', (req, res) => {
+    Users.find((err, data) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(data);
+        }
+    })
+});
+
+routes.get('/get-all-categories', (req, res) => {
+    Categories.find((err, data) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(data);
+        }
+    })
+})
+
+// * ADD
+routes.post('/add-category', (req, res) => {
+    // console.log(req.body, 'adddd');
+    const categoryName = req.body.categoryName;
+
+    Categories.findOne({ categoryName: categoryName }, async (err, data) => {
+        if (err) {
+            res.send(err);
+            return;
+        }
+        if (data) {
+            res.send('Category already exist!');
+        } else {
+            const newCategory = new Categories({ categoryName: categoryName, nameLower: categoryName.toLowerCase() });
+            const saveNewCategory = await newCategory.save();
+            // console.log(saveNewCategory, 'savenewCat');
+            res.send(saveNewCategory || 'Category is not saved');
+        }
+    })
+})
+
+// * EDIT
 routes.put('/update-category', (req, res) => {
     console.log(req.body, 'izmenjeni product');
 
@@ -48,6 +91,7 @@ routes.put('/update-product', (req, res) => {
     })
 })
 
+// * DELETE
 routes.delete('/delete-product/:productID', (req, res) => {
     console.log(req.params.productID);
     Product.deleteOne({ _id: req.params.productID }, (err, data) => {
@@ -67,26 +111,6 @@ routes.delete('/delete-category/:categoryID', (req, res) => {
             return;
         }
         if (data) res.send(data);
-    })
-})
-
-routes.get('/get-all-users', (req, res) => {
-    Users.find((err, data) => {
-        if (err) {
-            res.send(err);
-        } else {
-            res.send(data);
-        }
-    })
-});
-
-routes.get('/get-all-categories', (req, res) => {
-    Categories.find((err, data) => {
-        if (err) {
-            res.send(err);
-        } else {
-            res.send(data);
-        }
     })
 })
 

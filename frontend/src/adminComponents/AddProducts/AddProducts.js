@@ -1,18 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { productCategories } from '../../config/productCategories';
 import AdminService from '../../services/AdminService';
 import './add-products.scss';
 
 function AddProducts() {
     const [file, setFile] = useState(null);
+    const [allCategories, setAllCategories] = useState('');
     const [product, setProduct] = useState({
         userID: JSON.parse(localStorage.user)._id,
         rating: 0
     });
 
     useEffect(() => {
-        console.log(product);
-        console.log(productCategories, 'adsad');
+        AdminService.getAllCategories()
+            .then(res => {
+                if (res.status === 200) {
+                    setAllCategories(res.data);
+                    // console.log(res.data);
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        // console.log(product);
     }, [product])
 
     const onSubmit = (e) => {
@@ -63,9 +72,9 @@ function AddProducts() {
                             {/* <option value="technology">Technology</option>
                             <option value="art">Art</option>
                             <option value="cars">Cars</option> */}
-                            {
-                                productCategories.map((category) => {
-                                    return <option value={category.toLocaleLowerCase()}>{category}</option>
+                            {allCategories &&
+                                allCategories.map((category) => {
+                                    return <option value={category.nameLower}>{category.categoryName}</option>
                                 })
                             }
                         </select>

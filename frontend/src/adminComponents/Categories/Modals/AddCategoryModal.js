@@ -2,22 +2,28 @@ import React, { useState, useEffect } from 'react'
 import Modal from 'react-modal';
 import AdminService from '../../../services/AdminService';
 import customStyles from '../../../assets/js/custom-modal-style';
+import { useRef } from 'react';
 // import '../users.scss';
 
-function EditCategoryModal({ showModal, currentCategory, renderView }) {
+function AddCategoryModal({ showModal, renderView }) {
 
-    const [updatedCategory, setUpdatedCategory] = useState({
+    const [newCategory, setNewCategory] = useState({
         categoryName: '',
         nameLower: ''
     });
-    const [newCategory, setNewCategory] = useState({ ...updatedCategory, ...currentCategory })
+    const categoryInput = useRef();
     const [isAPIError, setIsAPIError] = useState(false);
     const [isAPIFinished, setIsAPIFinished] = useState(false);
     const [isValidForm, setIsValidForm] = useState(true);
 
+    useEffect(()=>{
+        console.log(categoryInput,'eeee');
+        // categoryInput.current.focus();
+    },[])
+
     const handleEditInputs = (e) => {
         newCategory[e.target.name] = e.target.value;
-        setUpdatedCategory(newCategory);
+        setNewCategory(newCategory);
     }
 
     const closeModal = (e) => {
@@ -27,15 +33,16 @@ function EditCategoryModal({ showModal, currentCategory, renderView }) {
 
     const onSubmitForm = (e) => {
         e.preventDefault();
-        if (!updatedCategory.categoryName) {
+        
+        if (!newCategory.categoryName) {
             setIsValidForm(false);
             return;
         }
-
         setIsValidForm(true);
-        AdminService.updateCategory(updatedCategory)
+        AdminService.addCategory(newCategory)
             .then(res => {
                 if (res.status === 200) {
+                    // console.log(res.data,'aaaa');
                     renderView();
                     setIsAPIError(false);
                     setTimeout(() => showModal(false), 2500);
@@ -53,7 +60,7 @@ function EditCategoryModal({ showModal, currentCategory, renderView }) {
     return (
         <>
             <Modal isOpen={true} ariaHideApp={false} style={customStyles} centered>
-                <h3>Edit "{currentCategory.categoryName}" category</h3>
+                <h3>Add new category</h3>
 
                 {!isValidForm ? <p className="notification text-warning">All fields are required!</p> : null}
                 {isAPIFinished ? <p className="notification text-success">Successfuly updated!</p> : null}
@@ -63,8 +70,8 @@ function EditCategoryModal({ showModal, currentCategory, renderView }) {
                     <div className="row">
                         <div className="col-md-12">
                             <label className="label" htmlFor="categoryName">Category name</label>
-                            <input className="form-control" name="categoryName" type="text" id="categoryName"
-                                defaultValue={currentCategory.categoryName || ''}
+                            <input ref={categoryInput} className="form-control" name="categoryName" type="text" id="categoryName"
+                                defaultValue=""
                                 onChange={handleEditInputs}
                             />
                         </div>
@@ -79,4 +86,4 @@ function EditCategoryModal({ showModal, currentCategory, renderView }) {
     )
 }
 
-export default EditCategoryModal;
+export default AddCategoryModal;

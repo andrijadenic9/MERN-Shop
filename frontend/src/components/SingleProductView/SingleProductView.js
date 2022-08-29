@@ -8,6 +8,7 @@ import { showLoader } from '../../redux-store/loader/loaderSlice';
 import RatingStars from '../Rating/RatingStars';
 import RatingStarsModal from '../Rating/RatingStarsModal';
 import { ToastContainer, toast } from "react-toastify";
+import Comment from '../Comment/Comment';
 
 function SingleProductView() {
 
@@ -29,50 +30,21 @@ function SingleProductView() {
         if (flg) {
             ShopService.getSingleProductFromDB(product._id)
                 .then(res => {
-                    if (res.data) setProduct(res.data)
+                    if (res.data) {
+                        setProduct(res.data);
+                        console.log(res.data, 'proizvod');
+                    }
                 })
-                .catch(err => console.log(err))
+                .catch(err => console.log(err));
         }
     }, [flg]);
 
     useEffect(() => {
-
-        // // * FOR VENDORS PRODUCTS (SHOP PAGE)
-        // if (params.productID) {
-        //     dispatch(showLoader(true));
-
-        //     ShopService.getSingleProduct(params.productID)
-        //         .then(response => {
-
-        //             if (response && response.status === 200) {
-        //                 // * without passing params.productID in getSingleProduct
-        //                 // setProduct(response.data.products[params.productID - 1]);
-        //                 setProduct(response.data);
-        //             }
-        //             if (!response.data) {
-        //                 setIsParamsValid(false);
-        //             }
-        //         })
-        //         .catch(err => {
-        //             console.log(err);
-        //             setIsParamsValid(false);
-        //             // setIsParamsValid(err);
-        //         })
-        //         .finally(() => {
-        //             setIsAPIFinished(true);
-        //             dispatch(showLoader(false));
-        //         })
-        // } else {
-        //     setIsParamsValid(false);
-        // }
-
-        // * FOR DB PRODUCTS (ABOUT PAGE)
         if (params.productID) {
             dispatch(showLoader(true));
 
             ShopService.getSingleProductFromDB(params.productID)
                 .then(response => {
-
                     if (response && response.status === 200) {
                         // * without passing params.productID in getSingleProductFromDB
                         // setProduct(response.data.products[params.productID - 1]);
@@ -159,8 +131,6 @@ function SingleProductView() {
     return (
         <>
             {noParamsLayout()}
-
-            {/* OVO JE ZA ABOUT PAGE */}
             {
                 product && product.hasOwnProperty('_id') ?
                     <div className="container">
@@ -196,41 +166,11 @@ function SingleProductView() {
                     : null
             }
 
+            <Comment product={product} />
+
             <RatingStarsModal product={product} getRatings={getRatings} isModal={isModal} setIsModal={setIsModal} />
 
             <ToastContainer />
-            {/* OVO JE ZA SHOP PAGE */}
-            {/* {
-                product && product.hasOwnProperty('id') ?
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-6 single-product-picture">
-                                <img src={product.images[0]} alt="" />
-                                <div className="details">
-                                    <span className="category"><span>cat:</span> <span>{product.category}</span></span>
-                                    <span className="rating"><span>rating:</span> <span>{product.rating}</span></span>
-                                    <span className="stock"><span>inStock:</span> <span>{product.stock}</span></span>
-                                </div>
-                            </div>
-                            <div className="col-6 single-product-description">
-                                <div className="headings">
-                                    <p>{product.brand}</p>
-                                    <h3>{product.title}</h3>
-                                    <Rating />
-                                </div>
-                                <p>{product.description}</p>
-                                <div className="details">
-                                    <span className="discount"><span>discount</span> <span>{product.discountPercentage}%</span></span>
-                                    <span className="price">{checkPrice()} {symbol}</span>
-                                </div>
-                                <div className="add-to-cart-btn-wrapper">
-                                    <button onClick={addToCart}>Add to cart</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    : null
-            } */}
         </>
     )
 }

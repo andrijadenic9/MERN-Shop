@@ -47,6 +47,9 @@ export const routeConfig = {
     DASHBOARD_EMAILS: {
         url: 'emails'
     },
+    DASHBOARD_COMMENTS: {
+        url: 'comments'
+    },
     DASHBOARD_CATEGORIES: {
         url: 'categories'
     }

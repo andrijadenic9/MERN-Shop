@@ -26,6 +26,7 @@ import Emails from './adminComponents/Emails/Emails';
 import Categories from './adminComponents/Categories/Categories';
 import Statistics from './adminComponents/Statistics';
 import AddProducts from './adminComponents/AddProducts/AddProducts';
+import Comments from './adminComponents/Comments/Comments';
 
 axios.defaults.baseURL = 'http://localhost:4000';
 
@@ -80,7 +81,7 @@ function App() {
             <Route path={routeConfig.DASHBOARD_PRODUCTS.url} element={<Products />} />
             <Route path={routeConfig.DASHBOARD_ADD_PRODUCTS.url} element={<AddProducts />} />
             <Route path={routeConfig.DASHBOARD_EMAILS.url} element={<Emails />} />
-            {/* <Route path={routeConfig.DASHBOARD_SUBSCRIPTIONS.url} element={<Subscriptions />} /> */}
+            <Route path={routeConfig.DASHBOARD_COMMENTS.url} element={<Comments />} />
             <Route path={routeConfig.DASHBOARD_CATEGORIES.url} element={<Categories />} />
           </Route>
         </Routes>}

@@ -25,6 +25,11 @@ export const ADMIN_SIDEBAR_CONFIG = [
         icon: 'ion-email'
     },
     {
+        name: 'Comments',
+        url: 'comments',
+        icon: 'ion-compose'
+    },
+    {
         name: 'Categories',
         url: 'categories',
         icon: 'ion-ios-pricetags'

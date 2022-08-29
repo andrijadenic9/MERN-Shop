@@ -10,7 +10,9 @@ const Product = require('./model/productModel');
 const app = express();
 const userRoute = require('./routes/userRoute');
 const adminRoute = require('./routes/adminRoute');
+const productRoute = require('./routes/productRoute');
 const paymentRoute = require('./routes/paymentRoute');
+const commentRoute = require('./routes/commentRoute');
 const fileUpload = require('express-fileupload');
 const fs = require('fs');
 
@@ -32,16 +34,22 @@ app.use('/api/payment', paymentRoute);
 // * ADMIN
 app.use('/api/admin', adminRoute);
 
+// * PRODUCT
+app.use('/api/product', productRoute);
+
+// * COMMENT
+app.use('/api/comment', commentRoute);
+
 app.post('/api/product/add-new-product', (req, res) => {
     console.log(req.body, 'boddyyy')
 })
 
-app.get('/api/product/get-all-product-from-db', (req, res) => {
-    Product.find({}, (err, data) => {
-        if (err) return res.send(err, 'GRESKAAA');
-        if (data) res.send(data);
-    });
-})
+// app.get('/api/product/get-all-product-from-db', (req, res) => {
+//     Product.find({}, (err, data) => {
+//         if (err) return res.send(err, 'GRESKAAA');
+//         if (data) res.send(data);
+//     });
+// })
 
 // * ADD PRODUCT FORM ADMIN DASHBOARD
 // TODO - POSTAVITI OVO U ADMIN ROUTE, POKUSAO BEZUSPESNO

@@ -62,7 +62,6 @@ function Comments({ product }) {
         CommentService.addComment(commentObject)
             .then(res => {
                 if (res.status === 200) {
-                    console.log('USPESNO');
                     setIsCommented(true);
                 }
             })
@@ -97,7 +96,7 @@ function Comments({ product }) {
                     product && <div class="comments col-md-6 my-3">
                         <h4 class="my-3">Comments({allComments.length})</h4>
                         {allComments.length > 0 ? allComments.map((comment, index) => {
-                            return (<div class="comment">
+                            return (<div class="comment" key={index}>
                                 <div class="comment-holder">
                                     <div class="comment-header d-flex justify-content-between align-items-center">
                                         <p class="author ">{comment.comment_author}</p>

@@ -13,6 +13,14 @@ class CommentService {
     static getAllComments(){
         return axios.get('/api/comment/get-all-comments');
     }
+
+    static deleteComment(id){
+        return axios.delete(`/api/comment/delete-comment/${id}`)
+    }
+
+    static changeCommentStatus(id) {
+        return axios.put('/api/comment/change-comment-status', id);
+    }
 }
 
 export default CommentService;

@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import CommentService from '../../services/CommentService';
 import DeleteCommentModal from './DeleteCommentModal';
-// import DeleteModal from './Modals/DeleteModal';
-// import './users.scss';
 import './comments.scss';
 
 function Comments() {
 
     const [comments, setComments] = useState('');
     const [currentComment, setCurrentComment] = useState('');
-    // const [isModalEdit, setIsModalEdit] = useState(false);
     const [isModalDelete, setIsModalDelete] = useState(false);
 
     useEffect(() => {
@@ -37,14 +34,28 @@ function Comments() {
                 <td>{comment.comment_author}</td>
                 <td>{comment.comment_content}</td>
                 <td>{comment.comment_date}</td>
-                <td style={{ textAlign: 'center' }}>
-                    {comment.comment_status === true ? <button style={{ width: '75%' }} className="btn btn-warning">Forbid</button> : <button style={{ width: '75%' }} className="btn btn-success">Approve</button>}
+                <td className="text-center">
+                    {comment.comment_status === true ? <button style={{ width: '75%' }} className="btn btn-warning" onClick={e => { changeStatus(comment) }}>Forbid</button> : <button style={{ width: '75%' }} className="btn btn-success" onClick={e => { changeStatus(comment) }}>Approve</button>}
                 </td>
                 <td>
                     <button className="btn btn-danger" onClick={e => deleteComment(comment)}>Delete</button>
                 </td>
             </tr>
         });
+    }
+
+    const changeStatus = (comment) => {
+        comment.comment_status === true ? comment.comment_status = false : comment.comment_status = true;
+        CommentService.changeCommentStatus(comment)
+            .then(res => {
+                if (res.status === 200) {
+                    getAllComments();
+                    console.log(res.data);
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     const deleteComment = (comment) => {
@@ -70,7 +81,6 @@ function Comments() {
                     <tbody>{comments && displayCommentsLayout()}</tbody>
                 </table>
             </div>
-            {/* {isModalEdit && <EditModal showModal={setIsModalEdit} currentComment={currentComment} renderView={getAllComments} />} */}
             {isModalDelete && <DeleteCommentModal showModal={setIsModalDelete} currentComment={currentComment} renderView={getAllComments} />}
         </>
     )

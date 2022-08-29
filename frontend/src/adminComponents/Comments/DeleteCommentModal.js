@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import Modal from 'react-modal';
 import customStyles from '../../assets/js/custom-modal-style';
-import AdminService from '../../services/AdminService';
+import CommentService from '../../services/CommentService';
 // import '../users.scss';
 
-function DeleteCategoryModal({ showModal, currentComment, renderView }) {
+function DeleteCommentModal({ showModal, currentComment, renderView }) {
 
     const [isAPIError, setIsAPIError] = useState(false);
     const [isAPIFinished, setIsAPIFinished] = useState(false);
@@ -15,9 +15,11 @@ function DeleteCategoryModal({ showModal, currentComment, renderView }) {
     }
 
     function deleteCurrentComment() {
-        AdminService.deleteCategory(currentComment._id)
+        // console.log(currentComment._id, 'cur');
+        CommentService.deleteComment(currentComment._id)
             .then(res => {
                 if (res.status === 200) {
+                    // console.log(res.data);
                     renderView();
                     setIsAPIError(false);
                     setTimeout(() => showModal(false), 2500);
@@ -50,4 +52,4 @@ function DeleteCategoryModal({ showModal, currentComment, renderView }) {
     )
 }
 
-export default DeleteCategoryModal;
+export default DeleteCommentModal;

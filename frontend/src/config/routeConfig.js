@@ -29,6 +29,9 @@ export const routeConfig = {
             return `/activate-account/${id}`
         }
     },
+    PROFILE: {
+        url: '/profile'
+    },
     ORDER: {
         url: '/order'
     },

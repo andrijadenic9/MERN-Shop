@@ -19,6 +19,7 @@ import { routeConfig } from './config/routeConfig';
 import { localStorageConfig } from './config/localStorageConfig';
 import 'react-toastify/dist/ReactToastify.css';
 import Loader from './components/Loader/Loader';
+import Profile from './components/Profile/Profile';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Users from './adminComponents/Users/Users';
 import Products from './adminComponents/Products/Products';
@@ -73,6 +74,7 @@ function App() {
           <Route path={routeConfig.AUTORIZATION.url} element={<Authorization />} />
           <Route path={routeConfig.ACTIVATE_USER.url} element={<ActivateUser />} />
           <Route path={routeConfig.ORDER.url} element={<Order />} />
+          <Route path={routeConfig.PROFILE.url} element={<Profile />} />
 
           {/* ADMIN DASHBOARD */}
           <Route path={routeConfig.DASHBOARD.url} element={<AdminProtect><Dashboard /></AdminProtect>}>

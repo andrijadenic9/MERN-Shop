@@ -40,7 +40,7 @@ function EditModal({ showModal, currentUser, renderView }) {
 
     const onSubmitForm = (e) => {
         e.preventDefault();
-        if (!updatedUser.username || !updatedUser.password || !updatedUser.email || !updatedUser.email.includes("@")) {
+        if (!updatedUser.username || !updatedUser.email || !updatedUser.email.includes("@")) {
             setIsValidForm(false);
             return;
         }
@@ -98,7 +98,8 @@ function EditModal({ showModal, currentUser, renderView }) {
                                 type={isPasswordShown ? "text" : "password"}
                                 id="password"
                                 defaultValue={currentUser.password || ''}
-                                onInput={handleEditInputs}
+                                // onInput={handleEditInputs}
+                                readOnly
                             />
                             <div className="checkbox-container">
                                 <label className="label" htmlFor="checkbox">Show password? </label>

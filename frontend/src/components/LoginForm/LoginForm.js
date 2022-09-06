@@ -8,6 +8,7 @@ import { goToRegister } from '../../redux-store/forms/toggleFormSlice';
 import AuthService from '../../services/AuthService';
 import './LoginForm.scss'
 import { showDashboard } from '../../redux-store/dashboard/dashboardSlice';
+import { localStorageConfig } from '../../config/localStorageConfig';
 
 
 
@@ -58,7 +59,7 @@ function LoginForm() {
                         if (response.data === 'User not found, try to register first.') {
                             setIsUserFound(false);
                         } else {
-                            localStorage.setItem('user', JSON.stringify(response.data));
+                            localStorage.setItem(localStorageConfig.USER, JSON.stringify(response.data));
                             dispatch(setUser(response.data));
                             response.data.isAdmin === 'true' ? dispatch(showDashboard(true)) : dispatch(showDashboard(false));
                             navigate(`/${response.data.isAdmin === 'true' ? 'dashboard' : ''}`);

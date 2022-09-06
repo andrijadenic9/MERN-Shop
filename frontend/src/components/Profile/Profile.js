@@ -1,15 +1,15 @@
 import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import Modal from 'react-modal';
 import { useSelector } from 'react-redux';
-import customStyles from '../../assets/js/custom-modal-style';
 import AuthService from '../../services/AuthService';
+import './profile.scss';
+import ProfileModal from './ProfileModal';
 
 function Profile() {
 
     const user = useSelector(state => state.userStore.user);
-    const [isPasswordShown, setIsPasswordShown] = useState(false);
+    const [isModal, setIsModal] = useState(false);
 
     const [userProfile, setUserProfile] = useState({
         username: '',
@@ -27,119 +27,41 @@ function Profile() {
     })
 
     useEffect(() => {
-        console.log(userProfile,' ALE ALE');
+        console.log(user, 'USERR');
+        console.log(userProfile, ' ALE ALE');
+    }, [userProfile, user])
 
-        // AuthService.getUser(user._id)
-        //     .then(res=>{
-        //         if(res.status === 200) {
-        //             console.log()
-        //         }
-        //     })
-    }, [userProfile])
 
-    const handleEditInputs = () => {
-
-    }
-
-    const onSubmitForm = () => {
-
-    }
-
-    const closeModal = () => {
-
-    }
-
-    const togglePassword = () => {
-        setIsPasswordShown(!isPasswordShown);
-    }
 
     return (
         <>
-            <Modal isOpen={true} ariaHideApp={false} style={customStyles} centered>
-                {/* {isAPIFinished && !isAPIError ? <p className="notification text-success">Successfuly updated!</p> : null}
-                {isAPIError ? <p className="notification text-warning">ERROR: Ooops, something went wrong, please try again later!</p> : null} */}
-
-                <div className="text-center">
-                    <form onSubmit={onSubmitForm}>
-                        <div className="row">
-                            <div className="col-md-6">
-                                <label className="label" htmlFor="username">Username</label>
-                                <input className="form-control" name="username" type="text" id="username"
-                                    defaultValue={user.username || ''}
-                                    onChange={handleEditInputs}
-                                />
-
-                                <label className="label" htmlFor="firstName">First name</label>
-                                <input className="form-control" name="firstName" type="text" id="firstName"
-                                    defaultValue={user.firstName || ''}
-                                    onInput={handleEditInputs}
-                                />
-
-                                <label className="label" htmlFor="lastName">Last name</label>
-                                <input className="form-control" name="lastName" type="text" id="lastName"
-                                    defaultValue={user.lastName || ''}
-                                    onChange={handleEditInputs}
-                                />
-
-                                <label className="label" htmlFor="password">Password</label>
-                                <input className="form-control" name="password"
-                                    type={isPasswordShown ? "text" : "password"}
-                                    id="password"
-                                    defaultValue={user.password || ''}
-                                    onInput={handleEditInputs}
-                                />
-                                <div className="checkbox-container">
-                                    <label className="label" htmlFor="checkbox">Show password? </label>
-                                    <input className="mx-1"
-                                        id="checkbox"
-                                        type="checkbox"
-                                        checked={isPasswordShown}
-                                        onChange={togglePassword}
-                                    />
-                                </div>
-                            </div>
-                            <div className="col-md-6">
-                                <label className="label" htmlFor="email">Email</label>
-                                <input className="form-control " name="email" type="email" id="email"
-                                    defaultValue={user.email || ''}
-                                    onInput={handleEditInputs}
-                                />
-
-                                <label className="label" htmlFor="address">Address</label>
-                                <input className="form-control" type="text" id="address" name="address"
-                                    defaultValue={user.address || ''}
-                                    onInput={handleEditInputs}
-                                />
-
-                                <label className="label" htmlFor="city">City</label>
-                                <input className="form-control" type="text" id="city" name="city"
-                                    defaultValue={user.city || ''}
-                                    onInput={handleEditInputs}
-                                />
-                                <div className="select-container mt-3">
-                                    <label className="label" htmlFor="gender">Gender: </label>
-                                    <select className="mb-2" name="gender" id="gender"
-                                        aria-selected defaultValue={user.gender || ''}
-                                        onChange={handleEditInputs}
-                                    >
-                                        <option value={user.gender}>
-                                            {user.gender === 'Male' ? 'Male' : 'Female'}
-                                        </option>
-
-                                        <option value={user.gender === 'Male' ? 'Female' : 'Male'}>
-                                            {user.gender === 'Male' ? 'Female' : 'Male'}
-                                        </option>
-                                    </select> <br />
-                                </div>
-                            </div>
-                            <div className="btns-wrapper mt-4">
-                                <button className="btn btn-primary mx-2" onClick={closeModal}>Close</button>
-                                <button className="btn btn-success mx-2 save">Save</button>
-                            </div>
-                        </div>
-                    </form>
+            <div className="container">
+                <h3>{userProfile && userProfile.username} account</h3>
+                <div className="row pb-5 pt-5">
+                    <div className="col-md-2 flexColumnEvenly">
+                        <div className="avatar">{!userProfile.avatar ? <img src={`http://localhost:4000/uploadedFiles/no-user-profile-picture.jpg`} alt="no-image" /> : <span>{userProfile.avatar}</span>}</div>
+                    </div>
+                    <div className="col-md-5 flexColumnEvenly">
+                        <div><span>Username: </span><span>{userProfile.username}</span></div>
+                        <div><span>Email: </span><span>{userProfile.email}</span></div>
+                        <div><span>First name: </span><span>{userProfile.firstName}</span></div>
+                        <div><span>Last name: </span><span>{userProfile.lastName}</span></div>
+                        <div><span>Gender: </span><span>{userProfile.gender}</span></div>
+                    </div>
+                    <div className="col-md-5 flexColumnEvenly">
+                        <div><span>Password: </span><span><button className="btn btn-success">Change</button></span></div>
+                        <div><span>City: </span><span>{userProfile.city}</span></div>
+                        <div><span>Address: </span><span>{userProfile.address}</span></div>
+                        <div><span>Post Code: </span><span>{userProfile.postCode}</span></div>
+                        <div><span>Phone Number: </span><span>{userProfile.phoneNumber}</span></div>
+                    </div>
                 </div>
-            </Modal>
+                <div className="row">
+                    <button className="btn btn-primary" onClick={() => { setIsModal(true) }}>Edit profile</button>
+                </div>
+            </div>
+
+            <ProfileModal isModal={isModal} setIsModal={setIsModal} userProfile={userProfile} setUserProfile={setUserProfile} />
         </>
     )
 }

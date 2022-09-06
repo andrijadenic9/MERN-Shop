@@ -92,6 +92,7 @@ routes.post('/complete-registration', (req, res) => {
 
 routes.put('/update-user', (req, res) => {
     const reqBody = req.body;
+    console.log(reqBody, 'OVDEE');
     Users.updateOne({ _id: reqBody._id }, {
         $set: {
             firstName: reqBody.firstName,
@@ -100,7 +101,6 @@ routes.put('/update-user', (req, res) => {
             city: reqBody.city,
             username: reqBody.username,
             email: reqBody.email,
-            password: reqBody.password,
             isAdmin: reqBody.isAdmin,
             isActive: reqBody.isActive
         }
@@ -110,6 +110,7 @@ routes.put('/update-user', (req, res) => {
             console.log(err);
             res.send(errorMsg);
         } else {
+            console.log(data, 'OVAMOOO');
             res.send(data);
         }
     });

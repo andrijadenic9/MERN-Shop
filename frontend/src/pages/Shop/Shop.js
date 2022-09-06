@@ -22,7 +22,6 @@ function Shop() {
                     // console.log(res);
                     setAllProducts(res.data)
                     setConstProducts(res.data);
-
                 }
             })
             .catch(err => {
@@ -46,31 +45,8 @@ function Shop() {
         }
     }, [flg]);
 
-    // const dispatch = useDispatch();
-    // const [allAds, setAllAds] = useState([]);
-    // const [constAds, setConstAds] = useState([]);
-
-    // useEffect(() => {
-    //     dispatch(showLoader(true));
-    //     ShopService.getAds()
-    //         .then(response => {
-    //             if (response && response.status === 200) {
-    //                 // console.log(response.data.products);
-    //                 setAllAds(response.data.products);
-    //                 setConstAds(response.data.products);
-    //             }
-    //         })
-    //         .catch(err => {
-    //             console.log(err);
-    //         })
-    //         .finally(() => {
-    //             dispatch(showLoader(false));
-    //         })
-    // }, []);
-
     return (
         <div className="container py-5">
-            {/* <button onClick={addProduct}>Add new product</button> */}
             <div className="filters">
                 <ByRange allProducts={allProducts} setAllProducts={setAllProducts} constProducts={constProducts} />
                 <BySearch allProducts={allProducts} setAllProducts={setAllProducts} constProducts={constProducts} />
@@ -89,25 +65,6 @@ function Shop() {
                 <ToastContainer />
             </div>
         </div>
-
-        // <div className="container py-5">
-        //     {/* <button onClick={addProduct}>Add new product</button> */}
-        //     <div className="filters">
-        //         <ByRange allAds={allAds} setAllAds={setAllAds} constAds={constAds} />
-        //         <BySearch allAds={allAds} setAllAds={setAllAds} constAds={constAds} />
-        //         <BySelection allAds={allAds} setAllAds={setAllAds} constAds={constAds} />
-        //     </div>
-
-        //     <div className="row justify-content-center">
-        //         {
-        //             allAds.length > 0 ?
-        //                 allAds.map(ad => {
-        //                     return <SingleAd ad={ad} key={ad.id} />
-        //                 })
-        //                 : null
-        //         }
-        //     </div>
-        // </div>
     )
 }
 

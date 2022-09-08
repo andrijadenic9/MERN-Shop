@@ -97,6 +97,19 @@ app.get('/uploadedFiles/:imageName', (req, res) => {
     })
 })
 
+app.get('/uploadedFiles/avatars/:imageName', (req, res) => {
+    fs.readFile(__dirname + "/uploadedFiles/avatars/" + req.params.imageName, (err, data) => {
+        if (err) {
+            res.send('no file');
+            return;
+        }
+        res.setHeader('Content-Type', 'image/jpg');
+        res.setHeader('Content-Length', ''); // Image size here
+        res.setHeader('Access-Control-Allow-Origin', '*'); // If needs to be public
+        res.send(data);
+    })
+})
+
 // TODO - ovo treba popraviti
 // * ADMIN
 // ? U 'adminRoute' OVAJ API CALL JE URADJEM PREKO PROMISA JER PREKO ASYNC/AWAIT NIJE HTELO ZATO, DOBIJAMO GRESKU 'Query was already executed'
@@ -261,4 +274,46 @@ app.get('/api/products/get-rating/:id', (req, res) => {
 app.listen(serverConfig.port, err => {
     if (err) console.log('ERROR Message: ' + err);
     else console.log(serverConfig.serverRunningMessage);
+});
+
+
+app.put('/api/user/update-user', (req, res) => {
+    const updatedUser = JSON.parse(req.body.userProfile);
+    const file = req.files.file;
+
+    console.log(updatedUser, 'updatedUser');
+    console.log(file, 'FILEE');
+
+    const path = `${__dirname}/uploadedFiles/avatars/`;
+    const fileName = `${new Date().getTime()}_${file.name}`;
+    const filePath = `${path}${fileName}`;
+
+    file.mv(filePath, err => {
+        if (err) return res.status(420).send('error file does not uploaded');
+        Users.updateOne({ _id: updatedUser._id }, {
+            $set: {
+                firstName: updatedUser.firstName,
+                lastName: updatedUser.lastName,
+                address: updatedUser.address,
+                city: updatedUser.city,
+                username: updatedUser.username,
+                email: updatedUser.email,
+                avatar: fileName,
+                phoneNumber: updatedUser.phoneNumber,
+                postCode: updatedUser.postCode,
+                gender: updatedUser.gender,
+                isAdmin: updatedUser.isAdmin,
+                isActive: updatedUser.isActive
+            }
+        }, (err, data) => {
+            if (err) {
+                const errorMsg = `Error on updating user: ${err}`;
+                console.log(err);
+                res.send(errorMsg);
+            } else {
+                console.log(data, 'OVAMOOO');
+                res.send(data);
+            }
+        });
+    })
 });

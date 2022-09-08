@@ -1,20 +1,24 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import customStyles from '../../assets/js/custom-modal-style';
-import { setUser } from '../../redux-store/users/userSlice'
+import { setUser } from '../../redux-store/users/userSlice';
 import { showLoader } from '../../redux-store/loader/loaderSlice';
 import AuthService from '../../services/AuthService';
 import { localStorageConfig } from '../../config/localStorageConfig';
 
-
-function ProfileModal({ isModal, setIsModal, userProfile, setUserProfile }) {
+function ProfileModal({ isProfileModal, setIsProfileModal, userProfile, setUserProfile }) {
 
     const [isValid, setIsValid] = useState(true);
+    const [file, setFile] = useState(null);
     const [isPasswordShown, setIsPasswordShown] = useState(false);
     const user = useSelector(state => state.userStore.user);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        console.log(user, 'userr');
+    }, [user]);
 
     const handleEditInputs = (e) => {
         let editedUser = { ...userProfile }
@@ -32,13 +36,24 @@ function ProfileModal({ isModal, setIsModal, userProfile, setUserProfile }) {
         }
         setIsValid(true);
 
+        let updatedUser = new FormData();
+        updatedUser.append('userProfile', JSON.stringify(userProfile));
+        updatedUser.append('file', file);
+
+        // console.log(updatedUser.get('file').name,'UPDATED USER');
         dispatch(showLoader(true));
-        AuthService.updateUser(userProfile)
+        AuthService.updateUser(updatedUser)
             .then(res => {
                 if (res.status === 200) {
-                    console.log(res.data, 'OVDEEE');
-                    dispatch(setUser(userProfile));
-                    localStorage.setItem(localStorageConfig.USER, JSON.stringify(userProfile));
+                    // console.log(res.data, 'OVDEEE');
+                    let newUser = {
+                        ...userProfile,
+                        avatar: updatedUser.get('file').name
+                    }
+                    // console.log(newUser,'newuser');
+                    dispatch(setUser(newUser));
+                    localStorage.setItem(localStorageConfig.USER, JSON.stringify(newUser));
+                    setIsProfileModal(false);
                 }
             })
             .catch(err => {
@@ -47,21 +62,21 @@ function ProfileModal({ isModal, setIsModal, userProfile, setUserProfile }) {
             .finally(() => {
                 dispatch(showLoader(false))
             })
-        // console.log(e);
-        // console.log('sve u redu');
+    }
+
+    const handleFile = (e) => {
+        setFile(e.target.files[0]);
+        console.log(e.target.files[0]);
     }
 
     const close = () => {
         setUserProfile(user);
-        setIsModal(false);
+        setIsProfileModal(false);
     }
 
     return (
         <>
-            {isModal && <Modal isOpen={true} ariaHideApp={false} style={customStyles} centered>
-                {/* {isAPIFinished && !isAPIError ? <p className="notification text-success">Successfuly updated!</p> : null}
-                {isAPIError ? <p className="notification text-warning">ERROR: Ooops, something went wrong, please try again later!</p> : null} */}
-
+            {isProfileModal && <Modal isOpen={true} ariaHideApp={false} style={customStyles} centered>
                 <div className="">
                     <form onSubmit={onSubmitForm}>
                         <div className="row">
@@ -148,6 +163,12 @@ function ProfileModal({ isModal, setIsModal, userProfile, setUserProfile }) {
                                     defaultValue={user.postCode || ''}
                                     onInput={handleEditInputs}
                                 />
+                            </div>
+                            <div className="row">
+                                <div className="col-12">
+                                    <label className="label" htmlFor="image">Upload image</label>
+                                    <input className="form-control" name="image" type="file" id="image" onChange={handleFile} />
+                                </div>
                             </div>
                             <div className="btns-wrapper mt-4">
                                 <button className="btn btn-primary mx-2" onClick={close}>Close</button>

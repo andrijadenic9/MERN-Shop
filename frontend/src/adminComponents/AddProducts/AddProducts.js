@@ -29,11 +29,12 @@ function AddProducts() {
         let newProduct = new FormData();
         newProduct.append('product', JSON.stringify(product));
         newProduct.append('file', file);
-        console.log(newProduct.get('file'));
+        // console.log(newProduct.get('file').name,'GET IT');
+        // console.log(newProduct,'NEWPRODUCT')
         AdminService.addProduct(newProduct)
             .then(res => {
                 if (res.status === 200) {
-                    console.log('USPESNO DODATO');
+                    // console.log('USPESNO DODATO');
                 }
             })
             .catch(err => {
@@ -48,8 +49,8 @@ function AddProducts() {
     }
 
     const handleFile = e => {
-        console.log(e.target.files[0]);
         setFile(e.target.files[0])
+        // console.log(e.target.files[0]);
     }
 
 

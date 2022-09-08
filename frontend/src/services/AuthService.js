@@ -27,6 +27,10 @@ class AuthService {
         return axios.delete(`/api/user/delete-user/${userID}`);
     }
 
+    static changePassword(userID) {
+        return axios.put('/api/user/change-password', userID);
+    }
+
     static setVoting(body){
         return axios.put('/api/user/vote', body);
     }

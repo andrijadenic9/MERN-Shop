@@ -90,41 +90,26 @@ routes.post('/complete-registration', (req, res) => {
     });
 });
 
-routes.put('/update-user', (req, res) => {
-    const reqBody = req.body;
-    console.log(reqBody, 'OVDEE');
-    Users.updateOne({ _id: reqBody._id }, {
-        $set: {
-            firstName: reqBody.firstName,
-            lastName: reqBody.lastName,
-            address: reqBody.address,
-            city: reqBody.city,
-            username: reqBody.username,
-            email: reqBody.email,
-            isAdmin: reqBody.isAdmin,
-            isActive: reqBody.isActive
-        }
-    }, (err, data) => {
-        if (err) {
-            const errorMsg = `Error on updating user: ${err}`;
-            console.log(err);
-            res.send(errorMsg);
-        } else {
-            console.log(data, 'OVAMOOO');
-            res.send(data);
-        }
-    });
-});
-
 routes.delete('/delete-user/:userID', (req, res) => {
     Users.deleteOne({ _id: req.params.userID }, (err, data) => {
         if (err) {
-            res.send('Error ' + err);
+            res.send('GERSKA ' + err);
         } else {
             res.send('Successfully deleted user')
         }
     });
 });
+
+routes.put('/change-password', (req, res) => {
+    console.log(req.body, 'bodyy');
+    Users.updateOne({ _id: req.body.userID }, { $set: { password: req.body.newPassword } }, (err, data) => {
+        if (err) {
+            res.send('GERSKA ' + err);
+        } else {
+            res.send('Password successfully updated')
+        }
+    })
+})
 
 // * validate login form midleware on backhand
 function validateLogin(req, res, next) {

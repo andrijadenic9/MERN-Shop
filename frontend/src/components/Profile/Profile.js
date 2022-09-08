@@ -3,13 +3,16 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import AuthService from '../../services/AuthService';
+import { ToastContainer, toast } from 'react-toastify';
+import PasswordModal from './PasswordModal';
 import './profile.scss';
 import ProfileModal from './ProfileModal';
 
 function Profile() {
 
     const user = useSelector(state => state.userStore.user);
-    const [isModal, setIsModal] = useState(false);
+    const [isProfileModal, setIsProfileModal] = useState(false);
+    const [isPasswordModal, setIsPasswordModal] = useState(false);
 
     const [userProfile, setUserProfile] = useState({
         username: '',
@@ -17,7 +20,7 @@ function Profile() {
         password: '',
         firstName: '',
         lastName: '',
-        // avatar: '',
+        avatar: '',
         address: '',
         city: '',
         gender: '',
@@ -26,20 +29,19 @@ function Profile() {
         ...user
     })
 
-    useEffect(() => {
-        console.log(user, 'USERR');
-        console.log(userProfile, ' ALE ALE');
-    }, [userProfile, user])
-
-
+    // useEffect(() => {
+    //     // console.log(user, 'USERR');
+    //     // console.log(userProfile, ' ALE ALE');
+    // }, [userProfile, user])
 
     return (
         <>
+            <ToastContainer />
             <div className="container">
                 <h3>{userProfile && userProfile.username} account</h3>
                 <div className="row pb-5 pt-5">
                     <div className="col-md-2 flexColumnEvenly">
-                        <div className="avatar">{!userProfile.avatar ? <img src={`http://localhost:4000/uploadedFiles/no-user-profile-picture.jpg`} alt="no-image" /> : <span>{userProfile.avatar}</span>}</div>
+                        <div className="avatar">{!userProfile.avatar ? <img src={`http://localhost:4000/uploadedFiles/no-user-profile-picture.jpg`} alt="no-image" /> : <img src={`http://localhost:4000/uploadedFiles/avatars/${userProfile.avatar}`} alt="image" />}</div>
                     </div>
                     <div className="col-md-5 flexColumnEvenly">
                         <div><span>Username: </span><span>{userProfile.username}</span></div>
@@ -49,7 +51,7 @@ function Profile() {
                         <div><span>Gender: </span><span>{userProfile.gender}</span></div>
                     </div>
                     <div className="col-md-5 flexColumnEvenly">
-                        <div><span>Password: </span><span><button className="btn btn-success">Change</button></span></div>
+                        <div><span>Password: </span><span><button className="btn btn-success" onClick={() => { setIsPasswordModal(true) }}>Change</button></span></div>
                         <div><span>City: </span><span>{userProfile.city}</span></div>
                         <div><span>Address: </span><span>{userProfile.address}</span></div>
                         <div><span>Post Code: </span><span>{userProfile.postCode}</span></div>
@@ -57,11 +59,12 @@ function Profile() {
                     </div>
                 </div>
                 <div className="row">
-                    <button className="btn btn-primary" onClick={() => { setIsModal(true) }}>Edit profile</button>
+                    <button className="btn btn-primary" onClick={() => { setIsProfileModal(true) }}>Edit profile</button>
                 </div>
             </div>
 
-            <ProfileModal isModal={isModal} setIsModal={setIsModal} userProfile={userProfile} setUserProfile={setUserProfile} />
+            <ProfileModal isProfileModal={isProfileModal} setIsProfileModal={setIsProfileModal} userProfile={userProfile} setUserProfile={setUserProfile} />
+            <PasswordModal isPasswordModal={isPasswordModal} setIsPasswordModal={setIsPasswordModal} />
         </>
     )
 }

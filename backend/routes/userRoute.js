@@ -121,6 +121,36 @@ function validateLogin(req, res, next) {
     next();
 }
 
+routes.put('/update-user', (req, res) => {
+    console.log(req.body, 'VODEEE');
+    const user = req.body;
+    Users.updateOne({ _id: user._id }, {
+        $set: {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            address: user.address,
+            city: user.city,
+            username: user.username,
+            email: user.email,
+            // avatar: fileName,
+            phoneNumber: user.phoneNumber,
+            postCode: user.postCode,
+            gender: user.gender,
+            isAdmin: user.isAdmin,
+            isActive: user.isActive
+        }
+    }, (err, data) => {
+        if (err) {
+            const errorMsg = `Error on updating user: ${err}`;
+            console.log(err);
+            res.send(errorMsg);
+        } else {
+            console.log(data, 'OVAMOOO');
+            res.send(data);
+        }
+    });
+});
+
 
 routes.put('/vote', (req, res) => {
     const userID = req.body.userID;

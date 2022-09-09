@@ -4,21 +4,23 @@ import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import customStyles from '../../assets/js/custom-modal-style';
 import { setUser } from '../../redux-store/users/userSlice';
-import { showLoader } from '../../redux-store/loader/loaderSlice';
 import AuthService from '../../services/AuthService';
 import { localStorageConfig } from '../../config/localStorageConfig';
+import { toast } from 'react-toastify';
 
 function ProfileModal({ isProfileModal, setIsProfileModal, userProfile, setUserProfile }) {
 
-    const [isValid, setIsValid] = useState(true);
+    const [error, setError] = useState(false);
+    const [isEmailValid, setIsEmailValid] = useState(true);
+    const [isUsernameValid, setIsUsernameValid] = useState(true);
     const [file, setFile] = useState(null);
     const [isPasswordShown, setIsPasswordShown] = useState(false);
     const user = useSelector(state => state.userStore.user);
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        console.log(user, 'userr');
-    }, [user]);
+    // useEffect(() => {
+    //     console.log(user, 'userr');
+    // }, [user]);
 
     const handleEditInputs = (e) => {
         let editedUser = { ...userProfile }
@@ -29,44 +31,55 @@ function ProfileModal({ isProfileModal, setIsProfileModal, userProfile, setUserP
     const onSubmitForm = (e) => {
         e.preventDefault()
 
-        if (!user.username || !user.email || !user.email.includes("@")) {
-            setUserProfile(user);
-            setIsValid(false);
+        userProfile.email ? setIsEmailValid(true) : setIsEmailValid(false);
+        userProfile.username ? setIsUsernameValid(true) : setIsUsernameValid(false);
+
+        if (!userProfile.username || !userProfile.email || !userProfile.email.includes("@")) {
+            setUserProfile(userProfile);
             return;
         }
-        setIsValid(true);
 
-        let updatedUser = new FormData();
-        updatedUser.append('userProfile', JSON.stringify(userProfile));
-        updatedUser.append('file', file);
-
-        // console.log(updatedUser.get('file').name,'UPDATED USER');
-        dispatch(showLoader(true));
-        AuthService.updateUser(updatedUser)
-            .then(res => {
-                if (res.status === 200) {
-                    // console.log(res.data, 'OVDEEE');
-                    let newUser = {
-                        ...userProfile,
-                        avatar: updatedUser.get('file').name
+        if (file !== null) {
+            let updatedUser = new FormData();
+            updatedUser.append('userProfile', JSON.stringify(userProfile));
+            updatedUser.append('file', file);
+            AuthService.updateUserWithAvatar(updatedUser)
+                .then(res => {
+                    if (res.status === 200) {
+                        let newUser = {
+                            ...userProfile,
+                            avatar: res.data.fileName
+                        }
+                        dispatch(setUser(newUser));
+                        localStorage.setItem(localStorageConfig.USER, JSON.stringify(newUser));
+                        setUserProfile(newUser);
+                        setError(false);
+                        setIsProfileModal(false);
+                        toast.success('Profile successfully edited');
                     }
-                    // console.log(newUser,'newuser');
-                    dispatch(setUser(newUser));
-                    localStorage.setItem(localStorageConfig.USER, JSON.stringify(newUser));
-                    setIsProfileModal(false);
-                }
-            })
-            .catch(err => {
-                console.log(err, 'GRESKA');
-            })
-            .finally(() => {
-                dispatch(showLoader(false))
-            })
-    }
+                })
+                .catch(err => {
+                    console.log(err, 'GRESKA');
+                    setError(true);
+                })
 
-    const handleFile = (e) => {
-        setFile(e.target.files[0]);
-        console.log(e.target.files[0]);
+        } else {
+            AuthService.updateUser(userProfile)
+                .then(res => {
+                    if (res.status === 200) {
+                        dispatch(setUser(userProfile));
+                        localStorage.setItem(localStorageConfig.USER, JSON.stringify(userProfile));
+                        setUserProfile(userProfile);
+                        setError(false);
+                        setIsProfileModal(false);
+                        toast.success('Profile successfully edited');
+                    }
+                })
+                .catch(err => {
+                    console.log(err, 'GRESKA');
+                    setError(true);
+                })
+        }
     }
 
     const close = () => {
@@ -81,7 +94,7 @@ function ProfileModal({ isProfileModal, setIsProfileModal, userProfile, setUserP
                     <form onSubmit={onSubmitForm}>
                         <div className="row">
                             <div className="col-md-6">
-                                <label className="label" htmlFor="username">Username</label>
+                                <label className="label" htmlFor="username" style={isUsernameValid ? { color: '' } : { color: 'tomato' }}>{isUsernameValid ? 'Username' : 'Username is required'}</label>
                                 <input className="form-control" name="username" type="text" id="username"
                                     defaultValue={user.username || ''}
                                     onChange={handleEditInputs}
@@ -104,7 +117,6 @@ function ProfileModal({ isProfileModal, setIsProfileModal, userProfile, setUserP
                                     type={isPasswordShown ? "text" : "password"}
                                     id="password"
                                     defaultValue={user.password || ''}
-                                    // onInput={handleEditInputs}
                                     readOnly
                                 />
                                 <div className="checkbox-container">
@@ -134,7 +146,7 @@ function ProfileModal({ isProfileModal, setIsProfileModal, userProfile, setUserP
                                 </div>
                             </div>
                             <div className="col-md-6">
-                                <label className="label" htmlFor="email">Email</label>
+                                <label className="label" htmlFor="email" style={isEmailValid ? { color: '' } : { color: 'tomato' }}>{isEmailValid ? 'Email' : 'Email is required'}</label>
                                 <input className="form-control " name="email" type="email" id="email"
                                     defaultValue={user.email || ''}
                                     onInput={handleEditInputs}
@@ -167,9 +179,10 @@ function ProfileModal({ isProfileModal, setIsProfileModal, userProfile, setUserP
                             <div className="row">
                                 <div className="col-12">
                                     <label className="label" htmlFor="image">Upload image</label>
-                                    <input className="form-control" name="image" type="file" id="image" onChange={handleFile} />
+                                    <input className="form-control" name="image" type="file" id="image" onChange={(e) => { setFile(e.target.files[0]) }} />
                                 </div>
                             </div>
+                            {error && <div style={{ color: 'tomato', marginTop: '15px' }}>Something went wrong, try again later.</div>}
                             <div className="btns-wrapper mt-4">
                                 <button className="btn btn-primary mx-2" onClick={close}>Close</button>
                                 <button className="btn btn-success mx-2 save">Save</button>

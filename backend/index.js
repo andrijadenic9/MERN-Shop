@@ -60,7 +60,7 @@ app.post('/api/admin/add-product', (req, res) => {
     // console.log(product, 'PRODUCTTT');
     const file = req.files.file;
     // console.log(file, 'FILEEEE');
-    const path = `${__dirname}/uploadedFiles/`;
+    const path = `${__dirname}/uploadedFiles/products/`;
     const fileName = `${new Date().getTime()}_${file.name}`;
     const filePath = `${path}${fileName}`;
 
@@ -85,7 +85,7 @@ app.post('/api/admin/add-product', (req, res) => {
 })
 
 app.get('/uploadedFiles/:imageName', (req, res) => {
-    fs.readFile(__dirname + "/uploadedFiles/" + req.params.imageName, (err, data) => {
+    fs.readFile(__dirname + "/uploadedFiles/products/" + req.params.imageName, (err, data) => {
         if (err) {
             res.send('no file');
             return;
@@ -277,7 +277,7 @@ app.listen(serverConfig.port, err => {
 });
 
 
-app.put('/api/user/update-user', (req, res) => {
+app.put('/api/user/update-user-with-avatar', (req, res) => {
     const updatedUser = JSON.parse(req.body.userProfile);
     const file = req.files.file;
 
@@ -312,7 +312,7 @@ app.put('/api/user/update-user', (req, res) => {
                 res.send(errorMsg);
             } else {
                 console.log(data, 'OVAMOOO');
-                res.send(data);
+                res.send({data, fileName: fileName});
             }
         });
     })

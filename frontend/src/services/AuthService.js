@@ -23,6 +23,10 @@ class AuthService {
         return axios.put('/api/user/update-user', user);
     }
 
+    static updateUserWithAvatar(user) {
+        return axios.put('/api/user/update-user-with-avatar', user);
+    }
+
     static deleteUser(userID) {
         return axios.delete(`/api/user/delete-user/${userID}`);
     }
@@ -31,11 +35,11 @@ class AuthService {
         return axios.put('/api/user/change-password', userID);
     }
 
-    static setVoting(body){
+    static setVoting(body) {
         return axios.put('/api/user/vote', body);
     }
 
-    static getVoting(id){
+    static getVoting(id) {
         return axios.get(`/api/user/get-vote/${id}`)
     }
 }

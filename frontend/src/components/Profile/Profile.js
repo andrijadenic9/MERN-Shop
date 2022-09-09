@@ -2,11 +2,10 @@ import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import AuthService from '../../services/AuthService';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import PasswordModal from './PasswordModal';
-import './profile.scss';
 import ProfileModal from './ProfileModal';
+import './profile.scss';
 
 function Profile() {
 
@@ -31,7 +30,7 @@ function Profile() {
 
     // useEffect(() => {
     //     // console.log(user, 'USERR');
-    //     // console.log(userProfile, ' ALE ALE');
+    //     console.log(userProfile, ' ALE ALE');
     // }, [userProfile, user])
 
     return (
@@ -41,7 +40,7 @@ function Profile() {
                 <h3>{userProfile && userProfile.username} account</h3>
                 <div className="row pb-5 pt-5">
                     <div className="col-md-2 flexColumnEvenly">
-                        <div className="avatar">{!userProfile.avatar ? <img src={`http://localhost:4000/uploadedFiles/no-user-profile-picture.jpg`} alt="no-image" /> : <img src={`http://localhost:4000/uploadedFiles/avatars/${userProfile.avatar}`} alt="image" />}</div>
+                        <div className="avatar">{!userProfile.avatar ? <img src={`http://localhost:4000/uploadedFiles/avatars/no-user-profile-picture.jpg`} alt="no-image" /> : <img src={`http://localhost:4000/uploadedFiles/avatars/${userProfile.avatar}`} alt={userProfile.avatar} />}</div>
                     </div>
                     <div className="col-md-5 flexColumnEvenly">
                         <div><span>Username: </span><span>{userProfile.username}</span></div>

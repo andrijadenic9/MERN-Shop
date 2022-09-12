@@ -9,7 +9,6 @@ routes.post('/register', (req, res) => {
     // console.log(reqBody, 'boddyyyyy');
     Users.findOne(reqBody, async (err, data) => {
         if (err) {
-            console.log(`Error on register user ${err}`)
             res.send(err);
             return;
         }
@@ -62,9 +61,7 @@ routes.post('/register', (req, res) => {
 routes.post('/login', validateLogin, (req, res) => {
     const reqBody = req.body;
     Users.findOne(reqBody, (err, data) => {
-        // console.log(data);
         if (err) {
-            console.log(`Error to login`);
             res.status(416).send('Error to login' + err);
             return;
         }
@@ -101,7 +98,7 @@ routes.delete('/delete-user/:userID', (req, res) => {
 });
 
 routes.put('/change-password', (req, res) => {
-    console.log(req.body, 'bodyy');
+    // console.log(req.body, 'bodyy');
     Users.updateOne({ _id: req.body.userID }, { $set: { password: req.body.newPassword } }, (err, data) => {
         if (err) {
             res.send('GERSKA ' + err);
@@ -122,7 +119,6 @@ function validateLogin(req, res, next) {
 }
 
 routes.put('/update-user', (req, res) => {
-    console.log(req.body, 'VODEEE');
     const user = req.body;
     Users.updateOne({ _id: user._id }, {
         $set: {
@@ -142,10 +138,8 @@ routes.put('/update-user', (req, res) => {
     }, (err, data) => {
         if (err) {
             const errorMsg = `Error on updating user: ${err}`;
-            console.log(err);
             res.send(errorMsg);
         } else {
-            console.log(data, 'OVAMOOO');
             res.send(data);
         }
     });
@@ -157,7 +151,6 @@ routes.put('/vote', (req, res) => {
     const productID = req.body.productID;
     Users.updateOne({ _id: userID }, { $push: { votedFor: productID } }, null, (err, data) => {
         if (err) {
-            console.log(err, 'greskaaa');
             res.send(err);
             return;
         }
@@ -169,11 +162,9 @@ routes.get('/get-vote/:id', (req, res) => {
     const userID = req.params.id;
     Users.find({ _id: userID }, (err, data) => {
         if (err) {
-            console.log(err, 'greskaaa');
             res.send(err);
             return;
         }
-        console.log(data);
         res.send(data[0].votedFor);
     })
 })

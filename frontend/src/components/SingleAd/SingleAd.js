@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { routeConfig } from "../../config/routeConfig";
 import ShopService from "../../services/ShopService";
 import RatingStars from "../Rating/RatingStars";
 import RatingStarsModal from "../Rating/RatingStarsModal";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import './SingleAd.scss';
+import { checkPrice } from "../../redux-store/currency/currencySlice";
 
 function SingleAd({ product }) {
     const symbol = useSelector(state => state.currencyStore.symbol);
@@ -45,6 +46,7 @@ function SingleAd({ product }) {
 
     const [isModal, setIsModal] = useState(false);
     const [getRatings, setGetRatings] = useState(0);
+    const dispatch = useDispatch();
 
     const openModal = (id) => {
         if (localStorage.user) {

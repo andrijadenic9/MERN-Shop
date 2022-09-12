@@ -18,14 +18,20 @@ function ProfileModal({ isProfileModal, setIsProfileModal, userProfile, setUserP
     const user = useSelector(state => state.userStore.user);
     const dispatch = useDispatch();
 
-    // useEffect(() => {
-    //     console.log(user, 'userr');
-    // }, [user]);
+    useEffect(() => {
+        console.log(user, 'userr');
+    }, [user]);
+
+    useEffect(() => {
+        console.log(userProfile, 'userProfiler');
+    }, [userProfile]);
 
     const handleEditInputs = (e) => {
         let editedUser = { ...userProfile }
         editedUser[e.target.id] = e.target.value;
         setUserProfile(editedUser);
+        // mozda bih ovde trebao reci da je ovo 'user'
+        // KADA KUCAM JE userProfile
     }
 
     const onSubmitForm = (e) => {

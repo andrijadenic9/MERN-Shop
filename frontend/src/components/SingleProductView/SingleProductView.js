@@ -24,7 +24,6 @@ function SingleProductView() {
     const currency = useSelector(state => state.currencyStore.currency);
     const flg = useSelector(state => state.ratingStarsStore.flg);
 
-
     useEffect(() => {
         console.log('use eff...', flg);
         if (flg) {

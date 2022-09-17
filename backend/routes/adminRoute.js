@@ -36,12 +36,29 @@ routes.get('/get-all-users', (req, res) => {
 });
 
 routes.get('/get-all-categories', (req, res) => {
-    Categories.find((err, data) => {
-        if (err) {
-            res.send(err);
-        } else {
-            res.send(data);
-        }
+    // Categories.find((err, data) => {
+    //     if (err) {
+    //         res.send(err);
+    //     } else {
+    //         res.send(data);
+    //     }
+    // })
+    Categories.aggregate([
+        {
+            $lookup: {
+                from: "products",
+                localField: "nameLower",
+                foreignField: "category",
+                as: "allProducts"
+            }
+        },
+        {$sort: {categoryName: 1}}
+
+    ]).then((result) => {
+        res.send(result)
+    }).catch((error) => {
+        const errMsg = "Error with get all categories, " + error
+        res.send(errMsg)
     })
 })
 

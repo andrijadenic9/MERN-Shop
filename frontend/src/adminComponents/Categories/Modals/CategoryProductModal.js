@@ -18,7 +18,7 @@ function CategoryProductModal({ showModal, allProducts }) {
                     <th scope="col">{index + 1}</th>
                     <th scope="col">{product.title}</th>
                     <th scope="col">{product.price} $</th>
-                    <th scope="col"><a href={`http://localhost:4000/uploadedFiles/products/${product.img}`} target="_blank">IMAGE</a></th>
+                    <th scope="col"><a href={`http://localhost:4000/uploadedFiles/${product.img}`} target="_blank">IMAGE</a></th>
                     <th scope="col"><Link to={routeConfig.PRODUCT_PAGE.realUrl(product._id)} target="_blank">Product</Link></th>
                 </tr>
             );

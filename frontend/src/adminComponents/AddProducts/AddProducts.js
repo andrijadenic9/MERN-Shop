@@ -44,7 +44,7 @@ function AddProducts() {
             .finally(() => {
                 e.target[0].value = '';
                 e.target[1].value = '';
-                e.target[2].value = '';
+                e.target[2].value = 'Choose category';
                 e.target[3].value = '';
                 e.target[4].value = '';
             })
@@ -84,9 +84,7 @@ function AddProducts() {
                         </div>
                         <div className="form-floating mb-3">
                             <select className="form-select" id="category" aria-label="Category" onChange={handleInputs}>
-                                {/* <option value="technology">Technology</option>
-                            <option value="art">Art</option>
-                            <option value="cars">Cars</option> */}
+                                <option>Choose category</option>
                                 {allCategories &&
                                     allCategories.map((category, index) => {
                                         return <option value={category.nameLower} key={index}>{category.categoryName}</option>

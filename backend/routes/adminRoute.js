@@ -36,13 +36,6 @@ routes.get('/get-all-users', (req, res) => {
 });
 
 routes.get('/get-all-categories', (req, res) => {
-    // Categories.find((err, data) => {
-    //     if (err) {
-    //         res.send(err);
-    //     } else {
-    //         res.send(data);
-    //     }
-    // })
     Categories.aggregate([
         {
             $lookup: {
@@ -52,7 +45,7 @@ routes.get('/get-all-categories', (req, res) => {
                 as: "allProducts"
             }
         },
-        {$sort: {categoryName: 1}}
+        { $sort: { categoryName: 1 } }
 
     ]).then((result) => {
         res.send(result)
@@ -109,9 +102,30 @@ routes.put('/update-product', (req, res) => {
 })
 
 // * DELETE
-routes.delete('/delete-product/:productID', (req, res) => {
-    console.log(req.params.productID);
+routes.delete('/delete-product/:productID/:image', (req, res) => {
+    // console.log(req.params, 'PARAMS');
     Product.deleteOne({ _id: req.params.productID }, (err, data) => {
+        if (err) {
+            res.send(err);
+            return;
+        }
+        if (data) {
+            // * delete image
+            fs.unlinkSync(__dirname + '/../uploadedFiles/products/' + req.params.image, (err, data) => {
+                if (err) {
+                    res.send('Error, files is not deleted');
+                    return;
+                }
+                res.send('File successfully deleted');
+            });
+            res.send(data);
+        }
+    })
+})
+
+routes.delete('/delete-category/:categoryID', (req, res) => {
+    // console.log(req.params.categoryID, 'CATEGORY ID');
+    Categories.deleteOne({ _id: req.params.categoryID }, (err, data) => {
         if (err) {
             res.send(err);
             return;
@@ -120,14 +134,14 @@ routes.delete('/delete-product/:productID', (req, res) => {
     })
 })
 
-routes.delete('/delete-category/:categoryID', (req, res) => {
-    console.log(req.params.categoryID);
-    Categories.deleteOne({ _id: req.params.categoryID }, (err, data) => {
+routes.delete('/delete-old-avatar/:avatar', (req, res) => {
+    // console.log(req.params.avatar, 'AVATAR');
+    fs.unlinkSync(__dirname + '/../uploadedFiles/avatars/' + req.params.avatar, (err, data) => {
         if (err) {
-            res.send(err);
+            res.send('Error, files is not deleted');
             return;
         }
-        if (data) res.send(data);
+        res.send('File successfully deleted');
     })
 })
 

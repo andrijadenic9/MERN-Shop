@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Modal from 'react-modal';
 import customStyles from '../../../assets/js/custom-modal-style';
 import AdminService from '../../../services/AdminService';
@@ -15,7 +15,7 @@ function DeleteProductModal({ showModal, currentProduct, renderView }) {
     }
 
     function deleteCurrentProduct() {
-        AdminService.deleteProduct(currentProduct._id)
+        AdminService.deleteProduct(currentProduct._id, currentProduct.img)
             .then(res => {
                 if (res.status === 200) {
                     renderView();

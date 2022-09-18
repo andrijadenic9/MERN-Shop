@@ -75,36 +75,36 @@ function Comments({ product }) {
         <>
             <div className="container">
                 <div className="row">
-                    <div class="col-md-6">
+                    <div className="col-md-6">
                         <h4>Leave a comment</h4>
                         <form method="post">
                             <label htmlFor="comment_author" style={isAuthor ? { color: '' } : { color: 'tomato' }}>{isAuthor ? 'Name' : 'Name is required'}</label>
-                            <input type="text" class="form-control mb-3" id="comment_author" name="comment_author" onInput={handleInputs} />
+                            <input type="text" className="form-control mb-3" id="comment_author" name="comment_author" onInput={handleInputs} />
                             <label htmlFor="comment_content" style={isContent ? { color: '' } : { color: 'tomato' }}>{isContent ? 'Comment' : 'Comment is required'}</label>
-                            <textarea maxlength="500" class="form-control pb-3" id="comment_content" name="comment_content" onInput={handleInputs}></textarea>
+                            <textarea maxLength="500" className="form-control pb-3" id="comment_content" name="comment_content" onInput={handleInputs}></textarea>
 
                             {!isFormValid && <div style={{ color: 'tomato' }}>Form is not valid, please fullfill all required files</div>}
 
                             {isCommented ? <div style={{ color: 'green' }}>Your comment is succesfully sent, now administrator needs to aprove it. Thank you for your time :)</div> : null}
 
-                            <button name="create_comment" class="btn btn-primary my-3" onClick={submitComment}>Submit</button>
+                            <button name="create_comment" className="btn btn-primary my-3" onClick={submitComment}>Submit</button>
                         </form>
                     </div>
                 </div>
 
                 {
-                    product && <div class="comments col-md-6 my-3">
-                        <h4 class="my-3">Comments({allComments.length})</h4>
+                    product && <div className="comments col-md-6 my-3">
+                        <h4 className="my-3">Comments({allComments.length})</h4>
                         {allComments.length > 0 ? allComments.map((comment, index) => {
-                            return (<div class="comment" key={index}>
-                                <div class="comment-holder">
-                                    <div class="comment-header d-flex justify-content-between align-items-center">
-                                        <p class="author ">{comment.comment_author}</p>
-                                        <p class="date">{comment.comment_date}</p>
+                            return (<div className="comment" key={index}>
+                                <div className="comment-holder">
+                                    <div className="comment-header d-flex justify-content-between align-items-center">
+                                        <p className="author ">{comment.comment_author}</p>
+                                        <p className="date">{comment.comment_date}</p>
                                     </div>
                                     <hr />
-                                    <div class="comment-body">
-                                        <p class="content ">{comment.comment_content}</p>
+                                    <div className="comment-body">
+                                        <p className="content ">{comment.comment_content}</p>
                                     </div>
                                 </div>
                             </div>)

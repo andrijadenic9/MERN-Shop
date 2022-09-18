@@ -7,6 +7,7 @@ import { setUser } from '../../redux-store/users/userSlice';
 import AuthService from '../../services/AuthService';
 import { localStorageConfig } from '../../config/localStorageConfig';
 import { toast } from 'react-toastify';
+import AdminService from '../../services/AdminService';
 
 function ProfileModal({ isProfileModal, setIsProfileModal, userProfile, setUserProfile }) {
 
@@ -15,15 +16,17 @@ function ProfileModal({ isProfileModal, setIsProfileModal, userProfile, setUserP
     const [isUsernameValid, setIsUsernameValid] = useState(true);
     const [file, setFile] = useState(null);
     const [isPasswordShown, setIsPasswordShown] = useState(false);
+    const [oldAvatar, setOldAvatar] = useState(null);
     const user = useSelector(state => state.userStore.user);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log(user, 'userr');
+        setOldAvatar(user.avatar);
+        // console.log(user, 'userr');
     }, [user]);
 
     useEffect(() => {
-        console.log(userProfile, 'userProfiler');
+        // console.log(userProfile, 'userProfiler');
     }, [userProfile]);
 
     const handleEditInputs = (e) => {
@@ -62,6 +65,15 @@ function ProfileModal({ isProfileModal, setIsProfileModal, userProfile, setUserP
                         setError(false);
                         setIsProfileModal(false);
                         toast.success('Profile successfully edited');
+                        AdminService.deleteOldAvatar(oldAvatar)
+                            .then(res => {
+                                if (res.status === 200) {
+                                    console.log(res.data, 'res.data');
+                                }
+                            })
+                            .catch(err => {
+                                console.log(err, 'GRESKA');
+                            })
                     }
                 })
                 .catch(err => {

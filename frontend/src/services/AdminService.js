@@ -38,12 +38,16 @@ class AdminService {
         return axios.put('/api/admin/update-category', category);
     }
 
-    static deleteProduct(id) {
-        return axios.delete(`/api/admin/delete-product/${id}`);
+    static deleteProduct(id, image) {
+        return axios.delete(`/api/admin/delete-product/${id}/${image}`);
     }
 
     static deleteCategory(id) {
-        return axios.delete(`/api/admin/delete-category/${id}`)
+        return axios.delete(`/api/admin/delete-category/${id}`);
+    }
+
+    static deleteOldAvatar(avatar) {
+        return axios.delete(`/api/admin/delete-old-avatar/${avatar}`);
     }
 
 }

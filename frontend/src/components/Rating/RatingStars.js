@@ -24,7 +24,7 @@ function RatingStars({ ratingNumber }) {
 
     return (
         <>
-            <div className="rating-stars">{ratingStars.map(star => star)}</div>
+            <div className="rating-stars">{ratingStars.map((star, index) => <div key={index}>{star}</div>)}</div>
         </>
     )
 }

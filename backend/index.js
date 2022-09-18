@@ -16,6 +16,8 @@ const commentRoute = require('./routes/commentRoute');
 const fileUpload = require('express-fileupload');
 const fs = require('fs');
 
+
+
 mongoose.connect(dbConfig.MONGODB_URL)
     .then(data => console.log(`MONGODB is connected`))
     .catch(err => console.log(err))
@@ -84,6 +86,7 @@ app.post('/api/admin/add-product', (req, res) => {
     })
 })
 
+// TODO - ubaciti u adminRoute samo promeniti path
 app.get('/uploadedFiles/:imageName', (req, res) => {
     fs.readFile(__dirname + "/uploadedFiles/products/" + req.params.imageName, (err, data) => {
         if (err) {
@@ -312,7 +315,7 @@ app.put('/api/user/update-user-with-avatar', (req, res) => {
                 res.send(errorMsg);
             } else {
                 console.log(data, 'OVAMOOO');
-                res.send({data, fileName: fileName});
+                res.send({ data, fileName: fileName });
             }
         });
     })

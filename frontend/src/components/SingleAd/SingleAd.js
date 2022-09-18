@@ -13,7 +13,7 @@ function SingleAd({ product }) {
     const symbol = useSelector(state => state.currencyStore.symbol);
     const currency = useSelector(state => state.currencyStore.currency);
     useEffect(() => {
-        // console.log(product);
+        console.log(product);
     }, [currency])
 
     // * MAKING PRICESES LOOK

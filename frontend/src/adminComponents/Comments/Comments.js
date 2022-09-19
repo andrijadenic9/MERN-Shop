@@ -78,7 +78,7 @@ function Comments() {
                             <th scope="col" className="text-center">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>{comments && displayCommentsLayout()}</tbody>
+                    <tbody>{comments ? displayCommentsLayout() : null}</tbody>
                 </table>
             </div>
             {isModalDelete && <DeleteCommentModal showModal={setIsModalDelete} currentComment={currentComment} renderView={getAllComments} />}

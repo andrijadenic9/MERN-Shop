@@ -33,7 +33,6 @@ function AddProducts() {
         AdminService.addProduct(newProduct)
             .then(res => {
                 if (res.status === 200) {
-                    // console.log('USPESNO DODATO');
                     toast.success('Product has been successfully added')
                 }
             })
@@ -59,10 +58,6 @@ function AddProducts() {
     const handleFile = e => {
         setFile(e.target.files[0])
         // console.log(e.target.files[0]);
-    }
-
-    const clearAllFields = (e) => {
-        console.log(e);
     }
 
     return (

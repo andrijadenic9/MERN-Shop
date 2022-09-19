@@ -71,7 +71,7 @@ function Users() {
                             <th scope="col" className="text-center">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>{users && displayUsersLayout()}</tbody>
+                    <tbody>{users ? displayUsersLayout() : null}</tbody>
                 </table>
             </div>
             {isModalEdit && <EditModal showModal={setIsModalEdit} currentUser={currentUser} renderView={getAllUsers} />}

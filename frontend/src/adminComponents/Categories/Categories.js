@@ -97,7 +97,7 @@ function Categories() {
                             <th scope="col" className="text-center">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>{categories && displayCategoriesLayout()}</tbody>
+                    <tbody>{categories ? displayCategoriesLayout() : null}</tbody>
                 </table>
             </div>
             {isModalAdd && <AddCategoryModal showModal={setIsModalAdd} renderView={getAllCategories} />}

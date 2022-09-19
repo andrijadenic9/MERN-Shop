@@ -8,6 +8,7 @@ import dashboardSlice from "./dashboard/dashboardSlice";
 import currencySlice from "./currency/currencySlice";
 import ratingStarsSlice from "./rating-stars/ratingStarsSlice";
 import byRangeSlice from "./currency/byRangeSlice";
+import productSlice from "./product/productSlice";
 
 export default configureStore({
     reducer: {
@@ -19,6 +20,7 @@ export default configureStore({
         dashboardStore: dashboardSlice,
         currencyStore: currencySlice,
         ratingStarsStore: ratingStarsSlice,
-        byRangeStore: byRangeSlice
+        byRangeStore: byRangeSlice,
+        productStore: productSlice
     }
 });

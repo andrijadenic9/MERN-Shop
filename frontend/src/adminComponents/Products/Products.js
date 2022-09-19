@@ -74,7 +74,7 @@ function Products() {
                             <th scope="col" className="text-center">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>{allProducts && displayProductLayout()}</tbody>
+                    <tbody>{allProducts ? displayProductLayout() : null}</tbody>
                 </table>
             </div>
             {isModalEdit && <EditProductModal showModal={setIsModalEdit} currentProduct={currentProduct} renderView={getAllProducts} />}

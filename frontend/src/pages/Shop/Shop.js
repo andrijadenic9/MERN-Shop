@@ -4,9 +4,10 @@ import SingleAd from '../../components/SingleAd/SingleAd';
 import { useDispatch, useSelector } from 'react-redux';
 import { showLoader } from '../../redux-store/loader/loaderSlice';
 import BySelection from '../../components/Filters/BySelection/BySelection';
-import { ToastContainer } from "react-toastify";
 import BySearch from '../../components/Filters/BySearch/BySearch';
 import ByRange from '../../components/Filters/ByRange/ByRange';
+import Pagination from '../../components/Pagination/Pagination';
+import { ToastContainer } from "react-toastify";
 
 function Shop() {
 
@@ -64,6 +65,8 @@ function Shop() {
 
                 <ToastContainer />
             </div>
+
+            <Pagination />
         </div>
     )
 }

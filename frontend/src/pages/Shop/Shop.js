@@ -20,7 +20,7 @@ function Shop() {
         ShopService.getProductsFromDB()
             .then(res => {
                 if (res && res.status === 200) {
-                    // console.log(res);
+                    console.log(res);
                     setAllProducts(res.data)
                     setConstProducts(res.data);
                 }
@@ -46,6 +46,30 @@ function Shop() {
         }
     }, [flg]);
 
+    // * pagination
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(10);
+
+    // * current product form pagination
+    const indexOfLastProduct = currentPage * itemsPerPage;
+    const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
+    // const currentAds = ads.slice(indexOfFirstProduct, indexOfLastProduct);
+
+    const paginationLayout = () => {
+        return (
+            <>
+                <div className="row">
+                    {allProducts.length ? <Pagination
+                        itemsPerPage={itemsPerPage}
+                        currentPage={currentPage}
+                        setCurrentPage={setCurrentPage}
+                        totalItems={allProducts.length}
+                    /> : null}
+                </div>
+            </>
+        )
+    }
+
     return (
         <div className="container py-5">
             <div className="filters">
@@ -62,11 +86,10 @@ function Shop() {
                         })
                         : null
                 }
-
                 <ToastContainer />
             </div>
 
-            <Pagination />
+            {paginationLayout()}
         </div>
     )
 }

@@ -1,32 +1,33 @@
 import React from 'react';
+import { useState } from 'react';
+import './pagination.scss';
 
-function Pagination() {
+function Pagination({ itemsPerPage, currentPage, setCurrentPage, totalItems }) {
 
-    const arr = [1, 2, 3, 4, 5];
+    const pageNumbers = [];
+
+    for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {
+        pageNumbers.push(i);
+    }
 
     return (
         <>
-            <nav aria-label="...">
+            {pageNumbers.length > 1 && <nav className="d-flex justify-content-center align-items-center">
                 <ul className="pagination">
-                    <li className="page-item">
-                        <span className="page-link">Previous</span>
+                    <li className={`pagination-item page-item ${currentPage === 1 && 'disabled'}`}>
+                        <a className="page-link" onClick={() => { setCurrentPage(prevState => prevState - 1) }}>Previous</a>
                     </li>
-                    {arr.map((item, index) => {
-                        return <li className="page-item"><a className="page-link" href="#">{index + 1}</a></li>
+                    {pageNumbers.map((number) => {
+                        return <li key={number} className={`pagination-item mx-1 ${currentPage === number ? 'active' : null}`}><a className="page-link" onClick={() => { setCurrentPage(number) }}>
+                            {number}
+                        </a>
+                        </li>
                     })}
-                    {/* <li className="page-item"><a className="page-link" href="#">1</a></li>
-                    <li className="page-item active">
-                        <span className="page-link">
-                            2
-                        </span>
-                    </li>
-                    <li className="page-item"><a className="page-link" href="#">3</a></li> */}
-
-                    <li className="page-item">
-                        <a className="page-link" href="#">Next</a>
+                    <li className={`pagination-item page-item ${currentPage === pageNumbers.length && 'disabled'}`}>
+                        <a className="page-link" onClick={() => { setCurrentPage(prevState => prevState + 1) }}>Next</a>
                     </li>
                 </ul>
-            </nav>
+            </nav>}
         </>
     )
 }
